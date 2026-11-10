@@ -1,0 +1,81 @@
+.tf-scene {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--bg-subtle);
+}
+
+.tf-scene--card {
+  height: 112px;
+}
+
+.tf-scene--hero {
+  height: 146px;
+}
+
+.tf-scene--mini {
+  height: 76px;
+}
+
+.tf-scene__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+[data-theme='dark'] .tf-scene__svg {
+  filter: brightness(0.8) saturate(0.92);
+}
+
+.tf-scene__overlay {
+  position: absolute;
+  inset: 0;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(
+    to bottom,
+    rgba(16, 42, 40, 0.08) 0%,
+    rgba(16, 42, 40, 0.02) 55%,
+    rgba(16, 42, 40, 0.22) 100%
+  );
+}
+
+/* Compact member avatar chips */
+.tf-avatar-stack {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tf-avatar-stack__chip {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--badge-border);
+  background-color: var(--accent-soft);
+  color: var(--badge-text);
+  font-size: 10px;
+  font-weight: var(--weight-semibold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tf-avatar-stack__chip:nth-child(even) {
+  border-color: var(--badge-warm-border);
+  background-color: var(--accent-sun-soft);
+  color: #8a4b10;
+}
+
+[data-theme='dark'] .tf-avatar-stack__chip:nth-child(even) {
+  color: var(--accent-sun);
+}
+
+.tf-avatar-stack__chip--extra {
+  border-color: var(--border-strong);
+  background-color: var(--bg-sand);
+  color: var(--text-primary);
+}

@@ -1,0 +1,41 @@
+.tf-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-7) var(--space-5);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-surface);
+}
+
+.tf-empty__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--badge-border);
+  background-color: var(--accent-soft);
+  color: var(--badge-text);
+  margin-bottom: var(--space-3);
+}
+
+.tf-empty__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.tf-empty__description {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  max-width: 44ch;
+}
+
+.tf-empty__action {
+  margin-top: var(--space-4);
+}
+

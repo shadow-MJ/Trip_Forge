@@ -1,0 +1,166 @@
+:root {
+  /* Tropical Coastal Palette — Light mode */
+  --color-white: #ffffff;
+  --color-sand-50: #faf7f2;
+  --color-sand-100: #f3ede2;
+  --color-sand-200: #e2ddd2;
+  --color-teal-50: #eef7f5;
+  --color-teal-100: #d9eeea;
+  --color-teal-600: #0f766e;
+  --color-teal-700: #0b5d56;
+  --color-teal-800: #0f524c;
+  --color-coral-50: #fdeee8;
+  --color-coral-600: #c84b31;
+  --color-sun-400: #f4a261;
+  --color-sun-100: #fef5e7;
+
+  /* Semantic tokens — Light mode */
+  --bg-page: var(--color-sand-50);
+  --bg-surface: var(--color-white);
+  --bg-subtle: var(--color-teal-50);
+  --bg-sand: var(--color-sand-100);
+  --bg-hover: #e6f2ef;
+  --bg-active: var(--color-teal-100);
+  --bg-overlay: rgba(16, 42, 40, 0.45);
+
+  --text-primary: #102a28;
+  --text-secondary: #2c4a47;
+  --text-muted: #536e6a;
+  --text-placeholder: #7e9490;
+
+  --border-color: var(--color-sand-200);
+  --border-strong: #c2d4cf;
+  --border-focus: var(--color-teal-600);
+
+  --accent-primary: var(--color-teal-600);
+  --accent-soft: #e3f4f1;
+  --accent-warm: var(--color-coral-600);
+  --accent-warm-soft: var(--color-coral-50);
+  --accent-sun: var(--color-sun-400);
+  --accent-sun-soft: var(--color-sun-100);
+
+  --btn-primary-bg: var(--color-teal-600);
+  --btn-primary-hover: var(--color-teal-700);
+  --btn-primary-text: var(--color-white);
+
+  --btn-secondary-bg: var(--color-white);
+  --btn-secondary-hover: var(--color-teal-50);
+  --btn-secondary-text: var(--text-primary);
+
+  --badge-bg: #eaf5f3;
+  --badge-border: #c5e2dc;
+  --badge-text: var(--color-teal-800);
+
+  --badge-warm-bg: var(--color-coral-50);
+  --badge-warm-border: #f5cfc2;
+  --badge-warm-text: #9e351f;
+
+  --progress-track: #dfe9e6;
+  --progress-fill: var(--color-teal-600);
+
+  --shadow-card: 0 2px 10px rgba(16, 42, 40, 0.04);
+  --shadow-lift: 0 10px 24px rgba(15, 118, 110, 0.1);
+  --shadow-overlay: 0 12px 32px rgba(16, 42, 40, 0.14);
+
+  /* Typography */
+  --font-display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.375rem;    /* 22px */
+  --text-2xl: 1.75rem;    /* 28px */
+  --text-3xl: 2.25rem;    /* 36px */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.65;
+
+  /* 8px spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Layout */
+  --max-width: 1120px;
+  --navbar-height: 66px;
+  --sidebar-width: 240px;
+
+  /* Motion */
+  --transition-fast: 150ms ease;
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg-page: #0b1716;
+  --bg-surface: #112220;
+  --bg-subtle: #18302d;
+  --bg-sand: #1c2c26;
+  --bg-hover: #1d3834;
+  --bg-active: #244540;
+  --bg-overlay: rgba(5, 14, 13, 0.74);
+
+  --text-primary: #f3f8f6;
+  --text-secondary: #c6dad6;
+  --text-muted: #8fb0aa;
+  --text-placeholder: #6a8a84;
+
+  --border-color: #213b37;
+  --border-strong: #335751;
+  --border-focus: #2dd4bf;
+
+  --accent-primary: #2dd4bf;
+  --accent-soft: #143531;
+  --accent-warm: #fb8c6f;
+  --accent-warm-soft: #34201c;
+  --accent-sun: #f5b971;
+  --accent-sun-soft: #2b2416;
+
+  --btn-primary-bg: #2dd4bf;
+  --btn-primary-hover: #5eead4;
+  --btn-primary-text: #071d1a;
+
+  --btn-secondary-bg: #142826;
+  --btn-secondary-hover: #1e3b37;
+  --btn-secondary-text: #f3f8f6;
+
+  --badge-bg: #173430;
+  --badge-border: #264d47;
+  --badge-text: #a7eae0;
+
+  --badge-warm-bg: #36201b;
+  --badge-warm-border: #5a342c;
+  --badge-warm-text: #ffb49e;
+
+  --progress-track: #1f3b37;
+  --progress-fill: #2dd4bf;
+
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.24);
+  --shadow-lift: 0 10px 26px rgba(0, 0, 0, 0.36);
+  --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+  color-scheme: dark;
+}

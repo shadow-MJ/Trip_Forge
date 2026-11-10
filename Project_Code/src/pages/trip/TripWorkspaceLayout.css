@@ -1,0 +1,22 @@
+.tf-workspace {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.tf-workspace__content {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 880px) {
+  .tf-workspace {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .tf-workspace__content {
+    width: 100%;
+  }
+}
+

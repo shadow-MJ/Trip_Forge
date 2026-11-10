@@ -1,0 +1,26 @@
+.tf-create-trip__wrap {
+  max-width: 660px;
+  margin-inline: auto;
+}
+
+.tf-create-trip__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.tf-create-trip__back:hover {
+  color: var(--text-primary);
+}
+
+.tf-create-trip__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+

@@ -1,0 +1,111 @@
+.tf-settings__wrap {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.tf-settings__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.tf-settings__theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@media (max-width: 560px) {
+  .tf-settings__theme-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tf-settings__theme-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  text-align: left;
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.tf-settings__theme-option:hover {
+  border-color: var(--border-strong);
+}
+
+.tf-settings__theme-option--active {
+  border-color: var(--accent-primary);
+  background-color: var(--bg-subtle);
+}
+
+.tf-settings__swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  flex-shrink: 0;
+}
+
+.tf-settings__swatch--light {
+  background: linear-gradient(135deg, #faf7f2 55%, #0f766e 55%);
+}
+
+.tf-settings__swatch--dark {
+  background: linear-gradient(135deg, #0b1716 55%, #2dd4bf 55%);
+}
+
+.tf-settings__option-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.tf-settings__option-desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.tf-settings__toggles {
+  display: flex;
+  flex-direction: column;
+}
+
+.tf-settings__toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.tf-settings__toggle-row:first-child {
+  padding-top: 0;
+}
+
+.tf-settings__toggle-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.tf-settings__checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.tf-settings__account-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+

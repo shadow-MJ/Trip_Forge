@@ -1,0 +1,61 @@
+.tf-card {
+  min-width: 0;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.tf-card--default {
+  padding: var(--space-5);
+}
+
+.tf-card--compact {
+  padding: var(--space-4);
+}
+
+.tf-card--none {
+  padding: 0;
+}
+
+.tf-card--interactive:hover {
+  border-color: var(--border-strong);
+}
+
+.tf-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.tf-card__heading-group {
+  min-width: 0;
+}
+
+.tf-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+}
+
+.tf-card__subtitle {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.tf-card__action {
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .tf-card--default {
+    padding: var(--space-4);
+  }
+}
