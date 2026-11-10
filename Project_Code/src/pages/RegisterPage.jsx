@@ -10,8 +10,8 @@ export default function RegisterPage() {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [university, setUniversity] = useState('');
-  const [department, setDepartment] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -33,6 +33,10 @@ export default function RegisterPage() {
       setError('Please enter a valid email address.');
       return;
     }
+    if (!phone.trim()) {
+      setError('Please enter your mobile number.');
+      return;
+    }
     if (password.length < 6) {
       setError('Password must be at least 6 characters.');
       return;
@@ -44,7 +48,7 @@ export default function RegisterPage() {
 
     setSubmitting(true);
     try {
-      await register({ name, email, password, university, department });
+      await register({ name, email, password, phone, university });
       navigate('/dashboard', { replace: true });
     } catch (err) {
       setError(err.message || 'Could not create account.');
@@ -82,7 +86,7 @@ export default function RegisterPage() {
                   id="register-name"
                   type="text"
                   className="form-input"
-                  placeholder="e.g., Mahmud Rana Tonmoy"
+                  placeholder="Enter Full Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   autoComplete="name"
@@ -107,6 +111,22 @@ export default function RegisterPage() {
               </div>
 
               <div className="form-field">
+                <label htmlFor="register-phone" className="form-label">
+                  Mobile number
+                </label>
+                <input
+                  id="register-phone"
+                  type="tel"
+                  className="form-input"
+                  placeholder="e.g., +880 1*********"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  autoComplete="tel"
+                  required
+                />
+              </div>
+
+              <div className="form-field">
                 <label htmlFor="register-university" className="form-label">
                   University (optional)
                 </label>
@@ -117,20 +137,6 @@ export default function RegisterPage() {
                   placeholder="e.g., Daffodil International University"
                   value={university}
                   onChange={(e) => setUniversity(e.target.value)}
-                />
-              </div>
-
-              <div className="form-field">
-                <label htmlFor="register-department" className="form-label">
-                  Department (optional)
-                </label>
-                <input
-                  id="register-department"
-                  type="text"
-                  className="form-input"
-                  placeholder="e.g., Software Engineering"
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
                 />
               </div>
 

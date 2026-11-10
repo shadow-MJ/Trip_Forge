@@ -2,10 +2,22 @@
 
 export const mockUsers = [
   {
+    id: 'user-joy',
+    name: 'Joy M',
+    email: 'bijoyhasan1612@gmail.com',
+    password: '@1111111',
+    phone: '+880 1706392496',
+    bio: 'Love to explore',
+    university: 'Daffodil International University',
+    department: 'Software Engineering',
+    createdAt: '2026-08-10T10:00:00Z',
+  },
+  {
     id: 'user-1',
     name: 'Mahmud Rana Tonmoy',
     email: 'ranatonmoy33@gmail.com',
     password: 'tonmoy1234',
+    phone: '+880 1712-345678',
     bio: 'Software Engineering student organizing semester break trips.',
     university: 'Daffodil International University',
     department: 'Software Engineering',
@@ -16,6 +28,7 @@ export const mockUsers = [
     name: 'Arafat Hossain',
     email: 'arafat@campus.edu',
     password: 'password123',
+    phone: '+880 1812-345679',
     bio: 'Route planner and sunrise hiker.',
     university: 'North South University',
     department: 'Computer Science',
@@ -26,6 +39,7 @@ export const mockUsers = [
     name: 'Nadia Karim',
     email: 'nadia@campus.edu',
     password: 'password123',
+    phone: '+880 1912-345680',
     bio: 'Always tracks receipts and group coffee runs.',
     university: 'BRAC University',
     department: 'Computer Science',
@@ -88,11 +102,11 @@ export const mockTrips = [
     destination: 'Bandarban & Boga Lake',
     startDate: '2027-02-05',
     endDate: '2027-02-07',
-    budget: 4800,
+    budget: 9800,
     description:
       'Freshly created workspace for our February hill trek. Add activities, packing gear, and ideas together.',
     inviteCode: 'TF-RIDGE-731',
-    createdBy: 'user-1',
+    createdBy: 'user-joy',
     createdAt: '2026-11-05T17:45:00Z',
     coordinates: { lat: 22.1953, lng: 92.2184 },
   },
@@ -118,6 +132,7 @@ export const mockJoinableTrips = [
 
 export const mockMembersByTrip = {
   'trip-1': [
+    { id: 'user-joy', name: 'Joy M', email: 'bijoyhasan1612@gmail.com', role: 'Trip Member', joinedAt: '2026-10-21T09:00:00Z' },
     { id: 'user-1', name: 'Mahmud Rana Tonmoy', email: 'ranatonmoy33@gmail.com', role: 'Trip Creator', joinedAt: '2026-10-20T09:00:00Z' },
     { id: 'user-2', name: 'Arafat Hossain', email: 'arafat@campus.edu', role: 'Trip Member', joinedAt: '2026-10-20T10:15:00Z' },
     { id: 'user-3', name: 'Nadia Karim', email: 'nadia@campus.edu', role: 'Trip Member', joinedAt: '2026-10-21T08:40:00Z' },
@@ -125,12 +140,15 @@ export const mockMembersByTrip = {
   ],
   'trip-2': [
     { id: 'user-2', name: 'Arafat Hossain', email: 'arafat@campus.edu', role: 'Trip Creator', joinedAt: '2026-10-28T13:20:00Z' },
+    { id: 'user-joy', name: 'Joy M', email: 'bijoyhasan1612@gmail.com', role: 'Trip Member', joinedAt: '2026-10-28T14:00:00Z' },
     { id: 'user-1', name: 'Mahmud Rana Tonmoy', email: 'ranatonmoy33@gmail.com', role: 'Trip Member', joinedAt: '2026-10-28T15:00:00Z' },
     { id: 'user-5', name: 'Samira Chowdhury', email: 'samira@campus.edu', role: 'Trip Member', joinedAt: '2026-10-29T09:10:00Z' },
   ],
   'trip-3': [
-    { id: 'user-1', name: 'Mahmud Rana Tonmoy', email: 'ranatonmoy33@gmail.com', role: 'Trip Creator', joinedAt: '2026-11-05T17:45:00Z' },
+    { id: 'user-joy', name: 'Joy M', email: 'bijoyhasan1612@gmail.com', role: 'Trip Creator', joinedAt: '2026-11-05T17:45:00Z' },
+    { id: 'user-1', name: 'Mahmud Rana Tonmoy', email: 'ranatonmoy33@gmail.com', role: 'Trip Member', joinedAt: '2026-11-05T18:00:00Z' },
     { id: 'user-2', name: 'Arafat Hossain', email: 'arafat@campus.edu', role: 'Trip Member', joinedAt: '2026-11-06T09:10:00Z' },
+    { id: 'user-4', name: 'Tariq Hasan', email: 'tariq@campus.edu', role: 'Trip Member', joinedAt: '2026-11-07T11:20:00Z' },
   ],
   'trip-4': [
     { id: 'user-3', name: 'Nadia Karim', email: 'nadia@campus.edu', role: 'Trip Creator', joinedAt: '2026-11-01T11:00:00Z' },
@@ -233,7 +251,53 @@ export const mockItineraryByTrip = {
       notes: 'Wear grip shoes near river stones.',
     },
   ],
-  'trip-3': [],
+  'trip-3': [
+    {
+      id: 'act-301',
+      day: 1,
+      title: 'Chander Gari pickup & transfer to Ruma Bazaar',
+      time: '08:30',
+      location: 'Bandarban Town Stand',
+      cost: 1500,
+      notes: 'Army checkpost registration; carry student and national IDs.',
+    },
+    {
+      id: 'act-302',
+      day: 1,
+      title: 'Afternoon trek up to Boga Lake tribal cottages',
+      time: '14:00',
+      location: 'Boga Lake Settlement',
+      cost: 800,
+      notes: 'Check into Siam Didi wooden cottage; lake walk before dusk.',
+    },
+    {
+      id: 'act-303',
+      day: 2,
+      title: 'Keokradong peak sunrise trek & cloud canopy',
+      time: '05:30',
+      location: 'Keokradong Summit',
+      cost: 500,
+      notes: 'Early summit hike; carry water bottles, light windbreaker, and camera.',
+    },
+    {
+      id: 'act-304',
+      day: 2,
+      title: 'Campfire barbecue & stargazing by the ridge',
+      time: '19:30',
+      location: 'Boga Lake Camp Point',
+      cost: 700,
+      notes: 'Local hill chicken roast, bamboo tea, and group acoustic songs.',
+    },
+    {
+      id: 'act-305',
+      day: 3,
+      title: 'Descent to town & Golden Temple (Buddha Dhatu Jadi)',
+      time: '10:00',
+      location: 'Balaghata, Bandarban',
+      cost: 450,
+      notes: 'Final souvenir market shopping before evening coach.',
+    },
+  ],
   'trip-4': [
     {
       id: 'act-401',
@@ -300,7 +364,32 @@ export const mockIdeasByTrip = {
       createdAt: '2026-11-02T09:30:00Z',
     },
   ],
-  'trip-3': [],
+  'trip-3': [
+    {
+      id: 'idea-301',
+      title: 'Nafakhum & Remakri river boat expedition',
+      location: 'Remakri & Sangu River',
+      estimatedCost: 1400,
+      notes: 'Take traditional wooden engine boat through Sangu river gorge to reach Nafakhum falls.',
+      authorId: 'user-joy',
+      authorName: 'Joy M',
+      votes: { 'user-joy': 1, 'user-1': 1, 'user-2': 1, 'user-4': 1 },
+      addedToItinerary: false,
+      createdAt: '2026-11-06T12:00:00Z',
+    },
+    {
+      id: 'idea-302',
+      title: 'Nilgiri sunrise view & cloud deck photography',
+      location: 'Nilgiri Resort Hilltop',
+      estimatedCost: 600,
+      notes: 'Early morning viewpoint stop along Thanchi road on the way back to town.',
+      authorId: 'user-1',
+      authorName: 'Mahmud Rana Tonmoy',
+      votes: { 'user-joy': 1, 'user-1': 1, 'user-2': 1 },
+      addedToItinerary: true,
+      createdAt: '2026-11-06T15:30:00Z',
+    },
+  ],
   'trip-4': [],
 };
 
@@ -346,7 +435,32 @@ export const mockPollsByTrip = {
       ],
     },
   ],
-  'trip-3': [],
+  'trip-3': [
+    {
+      id: 'poll-301',
+      question: 'Which trekking route should we prioritize for Day 2?',
+      createdBy: 'user-joy',
+      createdByName: 'Joy M',
+      status: 'open',
+      createdAt: '2026-11-07T10:00:00Z',
+      options: [
+        { id: 'opt-301', text: 'Keokradong Summit trail (rocky & scenic)', voterIds: ['user-joy', 'user-1', 'user-4'] },
+        { id: 'opt-302', text: 'Chingri Jhiri waterfall trail (shady & relaxed)', voterIds: ['user-2'] },
+      ],
+    },
+    {
+      id: 'poll-302',
+      question: 'What type of accommodation at Boga Lake?',
+      createdBy: 'user-joy',
+      createdByName: 'Joy M',
+      status: 'closed',
+      createdAt: '2026-11-05T19:00:00Z',
+      options: [
+        { id: 'opt-303', text: 'Siam Didi bamboo tribal cottage', voterIds: ['user-joy', 'user-1', 'user-2', 'user-4'] },
+        { id: 'opt-304', text: 'Trekker tents by the water', voterIds: [] },
+      ],
+    },
+  ],
   'trip-4': [],
 };
 
@@ -409,7 +523,44 @@ export const mockExpensesByTrip = {
       date: '2026-11-04',
     },
   ],
-  'trip-3': [],
+  'trip-3': [
+    {
+      id: 'exp-301',
+      title: 'Chander Gari 4WD round-trip advance',
+      amount: 4500,
+      payerId: 'user-joy',
+      payerName: 'Joy M',
+      participantIds: ['user-joy', 'user-1', 'user-2', 'user-4'],
+      date: '2026-11-06',
+    },
+    {
+      id: 'exp-302',
+      title: 'Boga Lake tribal cottage booking deposit',
+      amount: 2200,
+      payerId: 'user-1',
+      payerName: 'Mahmud Rana Tonmoy',
+      participantIds: ['user-joy', 'user-1', 'user-2', 'user-4'],
+      date: '2026-11-07',
+    },
+    {
+      id: 'exp-303',
+      title: 'Trekking guide & forest safety fee',
+      amount: 1500,
+      payerId: 'user-joy',
+      payerName: 'Joy M',
+      participantIds: ['user-joy', 'user-1', 'user-2', 'user-4'],
+      date: '2026-11-08',
+    },
+    {
+      id: 'exp-304',
+      title: 'Campfire dinner & barbecue supply share',
+      amount: 1000,
+      payerId: 'user-4',
+      payerName: 'Tariq Hasan',
+      participantIds: ['user-joy', 'user-1', 'user-2', 'user-4'],
+      date: '2026-11-09',
+    },
+  ],
   'trip-4': [],
 };
 
@@ -473,7 +624,54 @@ export const mockDiscussionByTrip = {
       replies: [],
     },
   ],
-  'trip-3': [],
+  'trip-3': [
+    {
+      id: 'post-301',
+      authorId: 'user-joy',
+      authorName: 'Joy M',
+      authorRole: 'Trip Creator',
+      content:
+        'Hey everyone! Booked our 4WD Chander Gari for Friday morning from Bandarban town to Ruma. Please keep your National ID / Student ID photocopies ready for the Ruma army checkpost clearance.',
+      createdAt: '2026-11-08T10:00:00Z',
+      replies: [
+        {
+          id: 'rep-301',
+          authorId: 'user-1',
+          authorName: 'Mahmud Rana Tonmoy',
+          authorRole: 'Trip Member',
+          content: 'Photocopies ready! Should we bring tents or stay in the wooden cottages by Boga Lake?',
+          createdAt: '2026-11-08T10:45:00Z',
+        },
+        {
+          id: 'rep-302',
+          authorId: 'user-joy',
+          authorName: 'Joy M',
+          authorRole: 'Trip Creator',
+          content: 'Cottages have warm blankets and home-cooked meals, so let’s take cottages. I already contacted Siam Didi.',
+          createdAt: '2026-11-08T11:15:00Z',
+        },
+      ],
+    },
+    {
+      id: 'post-302',
+      authorId: 'user-4',
+      authorName: 'Tariq Hasan',
+      authorRole: 'Trip Member',
+      content:
+        'I am bringing a 30,000 mAh high-capacity power bank and a first-aid kit with crepe bandages and muscle spray since electricity is limited near the lake.',
+      createdAt: '2026-11-09T14:20:00Z',
+      replies: [
+        {
+          id: 'rep-303',
+          authorId: 'user-2',
+          authorName: 'Arafat Hossain',
+          authorRole: 'Trip Member',
+          content: 'Awesome Tariq! I will carry trekking poles and headlamps for the Day 2 sunrise hike.',
+          createdAt: '2026-11-09T15:00:00Z',
+        },
+      ],
+    },
+  ],
   'trip-4': [],
 };
 
@@ -490,7 +688,13 @@ export const mockPackingByTrip = {
     { id: 'pack-201', title: 'Light windbreaker jacket', assigneeId: 'user-1', assigneeName: 'Mahmud Rana Tonmoy', packed: true },
     { id: 'pack-202', title: 'Trail sneakers with wet grip', assigneeId: 'user-5', assigneeName: 'Samira Chowdhury', packed: false },
   ],
-  'trip-3': [],
+  'trip-3': [
+    { id: 'pack-301', title: 'Trekking poles & knee support brace', assigneeId: 'user-joy', assigneeName: 'Joy M', packed: true },
+    { id: 'pack-302', title: '30,000 mAh high-capacity power bank', assigneeId: 'user-4', assigneeName: 'Tariq Hasan', packed: true },
+    { id: 'pack-303', title: 'Quick-dry microfiber towels & fleece jackets', assigneeId: 'user-1', assigneeName: 'Mahmud Rana Tonmoy', packed: false },
+    { id: 'pack-304', title: 'Outdoor first-aid kit & blister plasters', assigneeId: 'user-2', assigneeName: 'Arafat Hossain', packed: true },
+    { id: 'pack-305', title: 'Heavy-duty headlamps with extra AAA batteries', assigneeId: 'user-joy', assigneeName: 'Joy M', packed: false },
+  ],
   'trip-4': [],
 };
 
@@ -505,7 +709,13 @@ export const mockUpdatesByTrip = {
     { id: 'upd-201', text: 'Samira Chowdhury suggested idea "Sadapathor Bholaganj morning detour"', createdAt: '2026-11-02T09:30:00Z' },
     { id: 'upd-202', text: 'Arafat Hossain posted in Discussion about morning departure time', createdAt: '2026-11-04T08:15:00Z' },
   ],
-  'trip-3': [],
+  'trip-3': [
+    { id: 'upd-301', text: 'Joy M added expense "Trekking guide & forest safety fee" (৳1,500)', createdAt: '2026-11-08T18:00:00Z' },
+    { id: 'upd-302', text: 'Joy M started poll "Which trekking route should we prioritize for Day 2?"', createdAt: '2026-11-07T10:00:00Z' },
+    { id: 'upd-303', text: 'Mahmud Rana Tonmoy added expense "Boga Lake tribal cottage booking deposit" (৳2,200)', createdAt: '2026-11-07T09:15:00Z' },
+    { id: 'upd-304', text: 'Joy M suggested idea "Nafakhum & Remakri river boat expedition"', createdAt: '2026-11-06T12:00:00Z' },
+    { id: 'upd-305', text: 'Tariq Hasan joined the trip', createdAt: '2026-11-07T11:20:00Z' },
+  ],
   'trip-4': [],
 };
 
