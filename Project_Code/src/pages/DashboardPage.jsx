@@ -1,13 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUnreadNotificationCount } from '../api/notificationsApi';
-import { getTrips, joinTripByCode } from '../api/tripsApi';
+import {
+  cancelUserPendingRequest,
+  getTrips,
+  getUserPendingRequests,
+  joinTripByCode,
+} from '../api/tripsApi';
 import EmptyState from '../components/EmptyState';
 import ErrorState from '../components/ErrorState';
 import {
   ArrowRightIcon,
   BellIcon,
   CalendarIcon,
+  CheckIcon,
+  ClockIcon,
   CompassIcon,
   MapPinIcon,
   PlusIcon,
@@ -17,7 +24,7 @@ import Loader from '../components/Loader';
 import Modal from '../components/Modal';
 import { DestinationCover, MemberAvatarStack } from '../components/TropicalVisuals';
 import { useAuth } from '../context/useAuth';
-import { formatDateRange } from '../utils/dateUtils';
+import { formatDateRange, formatFullDate } from '../utils/dateUtils';
 import { formatCurrency, pluralize } from '../utils/formatters';
 import './DashboardPage.css';
 
@@ -27,6 +34,7 @@ export default function DashboardPage() {
   const navigate = useNavigate();
 
   const [trips, setTrips] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -37,6 +45,8 @@ export default function DashboardPage() {
   const [inviteCode, setInviteCode] = useState('');
   const [joinError, setJoinError] = useState('');
   const [joining, setJoining] = useState(false);
+  const [joinSuccessInfo, setJoinSuccessInfo] = useState(null);
+  const [cancelingReqId, setCancelingReqId] = useState(null);
 
   useEffect(() => {
     if (!userId) return undefined;
@@ -44,13 +54,15 @@ export default function DashboardPage() {
 
     async function fetchDashboard() {
       try {
-        const [tripsData, unread] = await Promise.all([
+        const [tripsData, unread, pendingData] = await Promise.all([
           getTrips(userId),
           getUnreadNotificationCount(),
+          getUserPendingRequests(userId),
         ]);
         if (!active) return;
         setTrips(tripsData);
         setUnreadCount(unread);
+        setPendingRequests(pendingData);
         setError('');
       } catch (err) {
         if (!active) return;
@@ -82,15 +94,47 @@ export default function DashboardPage() {
 
     setJoining(true);
     try {
-      const joinedTrip = await joinTripByCode(inviteCode, user);
-      setJoinOpen(false);
-      setInviteCode('');
-      navigate(`/trips/${joinedTrip.id}/overview`);
+      const result = await joinTripByCode(inviteCode, user);
+      if (result.status === 'pending') {
+        setJoinSuccessInfo(result);
+        const updated = await getUserPendingRequests(userId);
+        setPendingRequests(updated);
+        setInviteCode('');
+      } else if (result.id) {
+        setJoinOpen(false);
+        setInviteCode('');
+        navigate(`/trips/${result.id}/overview`);
+      }
     } catch (err) {
       setJoinError(err.message || 'Unable to join trip.');
     } finally {
       setJoining(false);
     }
+  }
+
+  async function handleCancelPending(requestId) {
+    setCancelingReqId(requestId);
+    try {
+      await cancelUserPendingRequest(requestId, userId);
+      setPendingRequests((prev) => prev.filter((r) => r.id !== requestId));
+    } catch (err) {
+      alert(err.message || 'Could not cancel join request.');
+    } finally {
+      setCancelingReqId(null);
+    }
+  }
+
+  function handleOpenJoinModal() {
+    setJoinError('');
+    setJoinSuccessInfo(null);
+    setInviteCode('');
+    setJoinOpen(true);
+  }
+
+  function handleCloseJoinModal() {
+    setJoinOpen(false);
+    setJoinError('');
+    setJoinSuccessInfo(null);
   }
 
   const filteredTrips = trips.filter((trip) => {
@@ -127,10 +171,7 @@ export default function DashboardPage() {
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={() => {
-              setJoinError('');
-              setJoinOpen(true);
-            }}
+            onClick={handleOpenJoinModal}
           >
             Join with code
           </button>
@@ -140,6 +181,67 @@ export default function DashboardPage() {
           </Link>
         </div>
       </section>
+
+      {!loading && !error && pendingRequests.length > 0 && (
+        <section className="tf-pending-section" aria-labelledby="pending-requests-title">
+          <div className="tf-pending-section__header">
+            <div>
+              <span className="badge badge-warm tf-pending-section__badge">
+                <ClockIcon size={12} />
+                AWAITING APPROVAL // {pluralize(pendingRequests.length, 'DOSSIER')}
+              </span>
+              <h2 id="pending-requests-title" className="tf-pending-section__title">
+                Pending join requests
+              </h2>
+              <p className="tf-pending-section__subtitle">
+                The trip creator must approve your request before you can access the workspace.
+              </p>
+            </div>
+          </div>
+
+          <div className="tf-pending-grid">
+            {pendingRequests.map((req) => (
+              <div key={req.id} className="tf-pending-card">
+                <div className="tf-pending-card__body">
+                  <div className="tf-pending-card__meta">
+                    <span className="badge badge-warm">
+                      <ClockIcon size={11} />
+                      Pending approval
+                    </span>
+                    <span className="tf-pending-card__date">
+                      {formatFullDate(req.requestedAt?.slice(0, 10))}
+                    </span>
+                  </div>
+
+                  <h3 className="tf-pending-card__name">{req.tripName || 'Trip'}</h3>
+
+                  {req.destination && (
+                    <p className="tf-pending-card__dest">
+                      <MapPinIcon size={13} />
+                      {req.destination}
+                    </p>
+                  )}
+
+                  <p className="tf-pending-card__desc">
+                    Your request was received and is awaiting creator review.
+                  </p>
+                </div>
+
+                <div className="tf-pending-card__footer">
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm tf-pending-card__cancel"
+                    onClick={() => handleCancelPending(req.id)}
+                    disabled={cancelingReqId === req.id}
+                  >
+                    {cancelingReqId === req.id ? 'Canceling...' : 'Cancel request'}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {!loading && !error && trips.length > 0 && (
         <div className="tf-dashboard__toolbar">
@@ -176,7 +278,7 @@ export default function DashboardPage() {
               <button
                 type="button"
                 className="btn btn-secondary"
-                onClick={() => setJoinOpen(true)}
+                onClick={handleOpenJoinModal}
               >
                 Join with code
               </button>
@@ -278,47 +380,84 @@ export default function DashboardPage() {
 
       <Modal
         isOpen={joinOpen}
-        onClose={() => setJoinOpen(false)}
-        title="Join a trip"
-        subtitle="Enter the invite code shared by your group."
+        onClose={handleCloseJoinModal}
+        title={joinSuccessInfo ? 'Join request submitted' : 'Join a trip'}
+        subtitle={
+          joinSuccessInfo
+            ? 'Your request has been sent to the trip creator.'
+            : 'Enter the invite code shared by your group.'
+        }
         size="sm"
       >
-        <form className="form-stack" onSubmit={handleJoinTrip}>
-          {joinError && (
-            <div className="form-error" role="alert">
-              {joinError}
+        {joinSuccessInfo ? (
+          <div className="tf-join-success">
+            <div className="tf-join-success__icon" aria-hidden="true">
+              <CheckIcon size={24} />
             </div>
-          )}
-          <div className="form-field">
-            <label htmlFor="join-invite-code" className="form-label">
-              Invite code
-            </label>
-            <input
-              id="join-invite-code"
-              type="text"
-              className="form-input"
-              placeholder="e.g., 6767"
-              value={inviteCode}
-              onChange={(e) => setInviteCode(e.target.value)}
-              autoFocus
-            />
-            <span className="form-hint">
-              Demo tip: try <code>6767</code> to join Sundarbans River Study Tour.
-            </span>
+            <div className="tf-join-success__details">
+              <p className="tf-join-success__trip">{joinSuccessInfo.trip?.name}</p>
+              {joinSuccessInfo.trip?.destination && (
+                <p className="tf-join-success__dest">
+                  <MapPinIcon size={13} />
+                  {joinSuccessInfo.trip?.destination}
+                </p>
+              )}
+              <div className="badge badge-warm tf-join-success__badge">
+                <ClockIcon size={12} />
+                Awaiting Trip Creator approval
+              </div>
+              <p className="tf-join-success__msg">
+                The trip creator has been notified. Once approved, this trip will appear in your active expeditions dossier.
+              </p>
+            </div>
+            <div className="inline-actions" style={{ justifyContent: 'flex-end', width: '100%' }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleCloseJoinModal}
+              >
+                Got it
+              </button>
+            </div>
           </div>
-          <div className="inline-actions" style={{ justifyContent: 'flex-end' }}>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => setJoinOpen(false)}
-            >
-              Cancel
-            </button>
-            <button type="submit" className="btn btn-primary" disabled={joining}>
-              {joining ? 'Joining...' : 'Join trip'}
-            </button>
-          </div>
-        </form>
+        ) : (
+          <form className="form-stack" onSubmit={handleJoinTrip}>
+            {joinError && (
+              <div className="form-error" role="alert">
+                {joinError}
+              </div>
+            )}
+            <div className="form-field">
+              <label htmlFor="join-invite-code" className="form-label">
+                Invite code
+              </label>
+              <input
+                id="join-invite-code"
+                type="text"
+                className="form-input"
+                placeholder="e.g., 6767"
+                value={inviteCode}
+                onChange={(e) => setInviteCode(e.target.value)}
+                autoFocus
+              />
+              <span className="form-hint">
+                Demo tip: try <code>6767</code> to request joining Sajek Valley Cloud Trek.
+              </span>
+            </div>
+            <div className="inline-actions" style={{ justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleCloseJoinModal}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-primary" disabled={joining}>
+                {joining ? 'Submitting...' : 'Request to join'}
+              </button>
+            </div>
+          </form>
+        )}
       </Modal>
     </main>
   );

@@ -117,12 +117,33 @@
 .tf-sidebar__link--active {
   background-color: var(--btn-primary-bg);
   color: var(--btn-primary-text);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 2px 4px rgba(24, 17, 11, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 2px 4px rgba(24, 17, 11, 0.12);
 }
 
 .tf-sidebar__link--active:hover {
   background-color: var(--btn-primary-bg);
   color: var(--btn-primary-text);
+}
+
+.tf-sidebar__label {
+  flex: 1;
+}
+
+.tf-sidebar__count {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 1px 7px;
+  line-height: 1.4;
+  border-radius: var(--radius-full);
+}
+
+.tf-sidebar__link--active .tf-sidebar__count {
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 @media (max-width: 880px) {

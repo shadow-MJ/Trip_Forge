@@ -5,6 +5,7 @@ import {
   mockIdeasByTrip,
   mockItineraryByTrip,
   mockJoinableTrips,
+  mockJoinRequestsByTrip,
   mockMembersByTrip,
   mockPackingByTrip,
   mockPollsByTrip,
@@ -16,6 +17,7 @@ import {
 function enrichTripForUser(trip, userId) {
   const members = mockMembersByTrip[trip.id] || [];
   const membership = members.find((m) => m.id === userId);
+  const pendingRequests = mockJoinRequestsByTrip[trip.id] || [];
   const expenses = mockExpensesByTrip[trip.id] || [];
   const itinerary = mockItineraryByTrip[trip.id] || [];
   const totalSpent = expenses.reduce((sum, exp) => sum + Number(exp.amount || 0), 0);
@@ -27,6 +29,7 @@ function enrichTripForUser(trip, userId) {
     activityCount: itinerary.length,
     totalSpent,
     userRole: membership ? membership.role : 'Trip Member',
+    pendingRequestsCount: pendingRequests.length,
   };
 }
 
@@ -54,6 +57,20 @@ export async function getTripById(tripId, userId) {
   const trip = mockTrips.find((t) => t.id === tripId);
   if (!trip) {
     throw new Error('Trip not found.');
+  }
+
+  const members = mockMembersByTrip[trip.id] || [];
+  const isMember = members.some((m) => m.id === userId) || trip.createdBy === userId;
+
+  if (!isMember) {
+    const pendingRequests = mockJoinRequestsByTrip[trip.id] || [];
+    const isPending = pendingRequests.some((r) => r.userId === userId);
+    if (isPending) {
+      throw new Error(
+        'Your request to join this trip has been submitted and is currently pending approval by the Trip Creator.'
+      );
+    }
+    throw new Error('You do not have access to this private trip workspace.');
   }
 
   return cloneData(enrichTripForUser(trip, userId));
@@ -157,9 +174,9 @@ export async function deleteTrip(tripId) {
   return { deleted: true, id: tripId };
 }
 
-export async function joinTripByCode(inviteCode, user) {
+export async function requestJoinTripByCode(inviteCode, user) {
   // TODO: Replace mock invite join with real REST endpoint:
-  // const response = await apiClient.post('/trips/join', { inviteCode });
+  // const response = await apiClient.post('/trips/join-request', { inviteCode });
   // return response.data;
   await simulateNetworkDelay(240);
 
@@ -190,20 +207,94 @@ export async function joinTripByCode(inviteCode, user) {
 
   const alreadyMember = mockMembersByTrip[trip.id].some((m) => m.id === user.id);
   if (alreadyMember) {
-    throw new Error('You are already a member of this trip.');
+    throw new Error('You are already an active member of this trip.');
   }
 
-  mockMembersByTrip[trip.id].push({
-    id: user.id,
+  if (!mockJoinRequestsByTrip[trip.id]) {
+    mockJoinRequestsByTrip[trip.id] = [];
+  }
+
+  const alreadyPending = mockJoinRequestsByTrip[trip.id].some((r) => r.userId === user.id);
+  if (alreadyPending) {
+    throw new Error(
+      `You already submitted a join request for "${trip.name}". Awaiting Trip Creator approval.`
+    );
+  }
+
+  const newRequest = {
+    id: `req-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+    tripId: trip.id,
+    tripName: trip.name,
+    destination: trip.destination,
+    userId: user.id,
     name: user.name,
     email: user.email,
-    role: 'Trip Member',
-    joinedAt: new Date().toISOString(),
-  });
+    status: 'pending',
+    requestedAt: new Date().toISOString(),
+  };
 
-  pushTripUpdate(trip.id, `${user.name} joined the trip`, 'Members', 'members', trip.name);
+  mockJoinRequestsByTrip[trip.id].push(newRequest);
 
-  return cloneData(enrichTripForUser(trip, user.id));
+  pushTripUpdate(
+    trip.id,
+    `${user.name} requested to join the trip with invite code ${trip.inviteCode}`,
+    'Members',
+    'members',
+    trip.name
+  );
+
+  return {
+    status: 'pending',
+    request: cloneData(newRequest),
+    trip: {
+      id: trip.id,
+      name: trip.name,
+      destination: trip.destination,
+      inviteCode: trip.inviteCode,
+    },
+    message: `Join request submitted for "${trip.name}"! The Trip Creator must approve before you can access the workspace.`,
+  };
+}
+
+export async function joinTripByCode(inviteCode, user) {
+  return requestJoinTripByCode(inviteCode, user);
+}
+
+export async function getUserPendingRequests(userId) {
+  // TODO: Replace with real REST endpoint:
+  // const response = await apiClient.get('/users/me/join-requests');
+  // return response.data;
+  await simulateNetworkDelay(140);
+
+  const results = [];
+  for (const tripId of Object.keys(mockJoinRequestsByTrip)) {
+    const list = mockJoinRequestsByTrip[tripId] || [];
+    for (const req of list) {
+      if (req.userId === userId) {
+        results.push(req);
+      }
+    }
+  }
+
+  return cloneData(results);
+}
+
+export async function cancelUserPendingRequest(requestId, userId) {
+  // TODO: Replace with real REST endpoint:
+  // const response = await apiClient.delete(`/users/me/join-requests/${requestId}`);
+  // return response.data;
+  await simulateNetworkDelay(160);
+
+  for (const tripId of Object.keys(mockJoinRequestsByTrip)) {
+    const list = mockJoinRequestsByTrip[tripId] || [];
+    const index = list.findIndex((r) => r.id === requestId && r.userId === userId);
+    if (index !== -1) {
+      const [removed] = list.splice(index, 1);
+      return { canceled: true, request: cloneData(removed) };
+    }
+  }
+
+  throw new Error('Pending join request not found or already cancelled.');
 }
 
 export async function getRecentUpdates(tripId) {

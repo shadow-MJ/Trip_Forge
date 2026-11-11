@@ -92,7 +92,7 @@ export const mockTrips = [
     description:
       'Three-day winter train trip covering swamp forest boat rides, tea estate walks, and stone quarry viewpoints.',
     inviteCode: 'TF-SYLH-198',
-    createdBy: 'user-2',
+    createdBy: 'user-1',
     createdAt: '2026-10-28T13:20:00Z',
     coordinates: { lat: 24.8949, lng: 91.8687 },
   },
@@ -110,10 +110,6 @@ export const mockTrips = [
     createdAt: '2026-11-05T17:45:00Z',
     coordinates: { lat: 22.1953, lng: 92.2184 },
   },
-];
-
-// Additional joinable trip not yet joined by user-1 (for testing "Join by invite code" on Dashboard)
-export const mockJoinableTrips = [
   {
     id: 'trip-4',
     name: 'Sundarbans River Study Tour',
@@ -123,25 +119,43 @@ export const mockJoinableTrips = [
     budget: 8200,
     description:
       'Department eco-tour exploring mangrove trails, river launches, and wildlife observation towers.',
-    inviteCode: '6767',
-    createdBy: 'user-3',
+    inviteCode: 'TF-SUND-512',
+    createdBy: 'user-joy',
     createdAt: '2026-11-01T11:00:00Z',
     coordinates: { lat: 22.4292, lng: 89.5914 },
   },
 ];
 
+// Additional joinable trip for testing "Join by invite code" on Dashboard
+export const mockJoinableTrips = [
+  {
+    id: 'trip-5',
+    name: 'Sajek Valley Cloud Trek',
+    destination: 'Sajek, Ruilui & Konglak',
+    startDate: '2027-03-22',
+    endDate: '2027-03-25',
+    budget: 8500,
+    description:
+      'Cloud canopy trek along Ruilui Para, sunset at Konglak Peak, and indigenous bamboo cottage stays.',
+    inviteCode: '6767',
+    createdBy: 'user-3',
+    createdAt: '2026-11-08T10:00:00Z',
+    coordinates: { lat: 23.3821, lng: 92.2938 },
+  },
+];
+
 export const mockMembersByTrip = {
   'trip-1': [
-    { id: 'user-joy', name: 'Joy M', email: 'bijoyhasan1612@gmail.com', role: 'Trip Member', joinedAt: '2026-10-21T09:00:00Z' },
     { id: 'user-1', name: 'Mahmud Rana Tonmoy', email: 'ranatonmoy33@gmail.com', role: 'Trip Creator', joinedAt: '2026-10-20T09:00:00Z' },
+    { id: 'user-joy', name: 'Joy M', email: 'bijoyhasan1612@gmail.com', role: 'Trip Member', joinedAt: '2026-10-21T09:00:00Z' },
     { id: 'user-2', name: 'Arafat Hossain', email: 'arafat@campus.edu', role: 'Trip Member', joinedAt: '2026-10-20T10:15:00Z' },
     { id: 'user-3', name: 'Nadia Karim', email: 'nadia@campus.edu', role: 'Trip Member', joinedAt: '2026-10-21T08:40:00Z' },
     { id: 'user-4', name: 'Tariq Hasan', email: 'tariq@campus.edu', role: 'Trip Member', joinedAt: '2026-10-21T19:05:00Z' },
   ],
   'trip-2': [
-    { id: 'user-2', name: 'Arafat Hossain', email: 'arafat@campus.edu', role: 'Trip Creator', joinedAt: '2026-10-28T13:20:00Z' },
+    { id: 'user-1', name: 'Mahmud Rana Tonmoy', email: 'ranatonmoy33@gmail.com', role: 'Trip Creator', joinedAt: '2026-10-28T13:20:00Z' },
+    { id: 'user-2', name: 'Arafat Hossain', email: 'arafat@campus.edu', role: 'Trip Member', joinedAt: '2026-10-28T13:30:00Z' },
     { id: 'user-joy', name: 'Joy M', email: 'bijoyhasan1612@gmail.com', role: 'Trip Member', joinedAt: '2026-10-28T14:00:00Z' },
-    { id: 'user-1', name: 'Mahmud Rana Tonmoy', email: 'ranatonmoy33@gmail.com', role: 'Trip Member', joinedAt: '2026-10-28T15:00:00Z' },
     { id: 'user-5', name: 'Samira Chowdhury', email: 'samira@campus.edu', role: 'Trip Member', joinedAt: '2026-10-29T09:10:00Z' },
   ],
   'trip-3': [
@@ -151,9 +165,35 @@ export const mockMembersByTrip = {
     { id: 'user-4', name: 'Tariq Hasan', email: 'tariq@campus.edu', role: 'Trip Member', joinedAt: '2026-11-07T11:20:00Z' },
   ],
   'trip-4': [
-    { id: 'user-3', name: 'Nadia Karim', email: 'nadia@campus.edu', role: 'Trip Creator', joinedAt: '2026-11-01T11:00:00Z' },
+    { id: 'user-joy', name: 'Joy M', email: 'bijoyhasan1612@gmail.com', role: 'Trip Creator', joinedAt: '2026-11-01T11:00:00Z' },
+    { id: 'user-1', name: 'Mahmud Rana Tonmoy', email: 'ranatonmoy33@gmail.com', role: 'Trip Member', joinedAt: '2026-11-01T11:15:00Z' },
+    { id: 'user-3', name: 'Nadia Karim', email: 'nadia@campus.edu', role: 'Trip Member', joinedAt: '2026-11-01T14:00:00Z' },
     { id: 'user-4', name: 'Tariq Hasan', email: 'tariq@campus.edu', role: 'Trip Member', joinedAt: '2026-11-01T14:20:00Z' },
   ],
+  'trip-5': [
+    { id: 'user-3', name: 'Nadia Karim', email: 'nadia@campus.edu', role: 'Trip Creator', joinedAt: '2026-11-08T10:00:00Z' },
+    { id: 'user-4', name: 'Tariq Hasan', email: 'tariq@campus.edu', role: 'Trip Member', joinedAt: '2026-11-08T12:00:00Z' },
+  ],
+};
+
+export const mockJoinRequestsByTrip = {
+  'trip-1': [],
+  'trip-2': [],
+  'trip-3': [
+    {
+      id: 'req-3-1',
+      tripId: 'trip-3',
+      tripName: 'Bandarban Ridge Trail',
+      destination: 'Bandarban & Boga Lake',
+      userId: 'user-5',
+      name: 'Samira Chowdhury',
+      email: 'samira@campus.edu',
+      status: 'pending',
+      requestedAt: '2026-11-10T14:30:00Z',
+    },
+  ],
+  'trip-4': [],
+  'trip-5': [],
 };
 
 export const mockItineraryByTrip = {
@@ -309,6 +349,7 @@ export const mockItineraryByTrip = {
       notes: 'Safety briefing on deck.',
     },
   ],
+  'trip-5': [],
 };
 
 export const mockIdeasByTrip = {
@@ -391,6 +432,7 @@ export const mockIdeasByTrip = {
     },
   ],
   'trip-4': [],
+  'trip-5': [],
 };
 
 export const mockPollsByTrip = {
@@ -462,6 +504,7 @@ export const mockPollsByTrip = {
     },
   ],
   'trip-4': [],
+  'trip-5': [],
 };
 
 export const mockExpensesByTrip = {
@@ -562,6 +605,7 @@ export const mockExpensesByTrip = {
     },
   ],
   'trip-4': [],
+  'trip-5': [],
 };
 
 export const mockDiscussionByTrip = {
@@ -673,6 +717,7 @@ export const mockDiscussionByTrip = {
     },
   ],
   'trip-4': [],
+  'trip-5': [],
 };
 
 export const mockPackingByTrip = {
@@ -696,6 +741,7 @@ export const mockPackingByTrip = {
     { id: 'pack-305', title: 'Heavy-duty headlamps with extra AAA batteries', assigneeId: 'user-joy', assigneeName: 'Joy M', packed: false },
   ],
   'trip-4': [],
+  'trip-5': [],
 };
 
 export const mockUpdatesByTrip = {
@@ -716,7 +762,12 @@ export const mockUpdatesByTrip = {
     { id: 'upd-304', text: 'Joy M suggested idea "Nafakhum & Remakri river boat expedition"', createdAt: '2026-11-06T12:00:00Z' },
     { id: 'upd-305', text: 'Tariq Hasan joined the trip', createdAt: '2026-11-07T11:20:00Z' },
   ],
-  'trip-4': [],
+  'trip-4': [
+    { id: 'upd-401', text: 'Joy M created the trip workspace', createdAt: '2026-11-01T11:00:00Z' },
+    { id: 'upd-402', text: 'Mahmud Rana Tonmoy joined the trip', createdAt: '2026-11-01T11:15:00Z' },
+    { id: 'upd-403', text: 'Nadia Karim added activity "Board river launch at Khulna Ghat"', createdAt: '2026-11-02T10:00:00Z' },
+  ],
+  'trip-5': [],
 };
 
 export const mockWeatherByDestination = {
@@ -749,6 +800,21 @@ export const mockWeatherByDestination = {
       { day: 'Day 1', highC: 22, lowC: 13, summary: 'Misty sunrise, sunny' },
       { day: 'Day 2', highC: 21, lowC: 12, summary: 'Crisp & dry' },
       { day: 'Day 3', highC: 22, lowC: 13, summary: 'Light clouds' },
+    ],
+  },
+  'Khulna & Karamjal': {
+    available: true,
+    location: 'Sundarbans, Bangladesh',
+    temperatureC: 25,
+    feelsLikeC: 26,
+    condition: 'Mangrove river breeze',
+    rainChancePercent: 15,
+    humidityPercent: 74,
+    windKmh: 11,
+    outlook: [
+      { day: 'Day 1', highC: 26, lowC: 18, summary: 'Sunny launch cruise' },
+      { day: 'Day 2', highC: 25, lowC: 17, summary: 'Watchtower trail clear' },
+      { day: 'Day 3', highC: 26, lowC: 18, summary: 'Warm river afternoon' },
     ],
   },
   // Intentionally unavailable to demonstrate graceful WeatherCard fallback state

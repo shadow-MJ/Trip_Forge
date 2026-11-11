@@ -58,18 +58,36 @@ export default function Sidebar({ trip }) {
       </div>
 
       <nav className="tf-sidebar__nav">
-        {TRIP_TABS.map(({ key, label, Icon }) => (
-          <NavLink
-            key={key}
-            to={`/trips/${trip?.id}/${key}`}
-            className={({ isActive }) =>
-              `tf-sidebar__link ${isActive ? 'tf-sidebar__link--active' : ''}`
-            }
-          >
-            <Icon size={16} />
-            <span>{label}</span>
-          </NavLink>
-        ))}
+        {TRIP_TABS.map(({ key, label, Icon }) => {
+          const showPendingBadge =
+            key === 'members' &&
+            trip?.userRole === 'Trip Creator' &&
+            Number(trip?.pendingRequestsCount || 0) > 0;
+
+          return (
+            <NavLink
+              key={key}
+              to={`/trips/${trip?.id}/${key}`}
+              className={({ isActive }) =>
+                `tf-sidebar__link ${isActive ? 'tf-sidebar__link--active' : ''}`
+              }
+            >
+              <Icon size={16} />
+              <span className="tf-sidebar__label">{label}</span>
+              {showPendingBadge && (
+                <span
+                  className="badge badge-warm tf-sidebar__count"
+                  title={`${trip.pendingRequestsCount} pending join request${
+                    trip.pendingRequestsCount > 1 ? 's' : ''
+                  }`}
+                  aria-label={`${trip.pendingRequestsCount} pending join requests`}
+                >
+                  {trip.pendingRequestsCount}
+                </span>
+              )}
+            </NavLink>
+          );
+        })}
       </nav>
     </aside>
   );
