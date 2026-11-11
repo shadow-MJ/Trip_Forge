@@ -9,12 +9,21 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   background: linear-gradient(
-    125deg,
-    var(--accent-soft) 0%,
-    var(--bg-surface) 58%,
-    var(--accent-sun-soft) 100%
+    135deg,
+    rgba(244, 238, 229, 0.7) 0%,
+    rgba(255, 255, 255, 0.95) 55%,
+    rgba(250, 242, 228, 0.6) 100%
   );
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card), var(--shadow-bevel);
+}
+
+[data-theme='dark'] .tf-dash-hero {
+  background: linear-gradient(
+    135deg,
+    rgba(31, 24, 19, 0.9) 0%,
+    rgba(22, 17, 13, 0.95) 55%,
+    rgba(36, 27, 20, 0.8) 100%
+  );
 }
 
 .tf-dash-hero > div {
@@ -47,13 +56,14 @@
 }
 
 .tf-dashboard__count {
-  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   color: var(--text-muted);
 }
 
 .tf-dashboard__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr));
   gap: var(--space-5);
 }
 
@@ -63,7 +73,7 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   background-color: var(--bg-surface);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card), var(--shadow-bevel);
   overflow: hidden;
   transition:
     border-color var(--transition-fast),
@@ -72,8 +82,8 @@
 }
 
 .tf-trip-card:hover {
-  border-color: var(--accent-primary);
-  box-shadow: var(--shadow-lift);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lift), var(--shadow-bevel);
   transform: translateY(-2px);
 }
 
@@ -87,38 +97,48 @@
 .tf-trip-card__role {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
+  padding: 3px 9px;
   border-radius: var(--radius-full);
-  background-color: rgba(255, 255, 255, 0.92);
-  color: #102a28;
-  font-size: var(--text-xs);
+  background-color: rgba(250, 247, 242, 0.94);
+  border: 1px solid rgba(36, 24, 17, 0.12);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: var(--weight-semibold);
+  letter-spacing: -0.01em;
+  backdrop-filter: blur(8px);
 }
 
-[data-theme='dark'] .tf-trip-card__role {
-  background-color: rgba(11, 23, 22, 0.9);
-  color: #f3f8f6;
+[data-theme="dark"] .tf-trip-card__role {
+  background-color: rgba(22, 17, 13, 0.92);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #f7f2ea;
 }
 
 .tf-trip-card__arrow {
   width: 28px;
   height: 28px;
   border-radius: var(--radius-full);
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #102a28;
+  background-color: rgba(250, 247, 242, 0.92);
+  border: 1px solid rgba(36, 24, 17, 0.12);
+  color: var(--text-primary);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform var(--transition-fast), background-color var(--transition-fast);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
 }
 
-[data-theme='dark'] .tf-trip-card__arrow {
-  background-color: rgba(11, 23, 22, 0.9);
-  color: #f3f8f6;
+[data-theme="dark"] .tf-trip-card__arrow {
+  background-color: rgba(22, 17, 13, 0.92);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #f7f2ea;
 }
 
 .tf-trip-card:hover .tf-trip-card__arrow {
-  transform: translateX(2px);
+  transform: translateX(3px);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-color: var(--btn-primary-bg);
 }
 
 .tf-trip-card__body {
@@ -131,8 +151,9 @@
 .tf-trip-card__title {
   font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
@@ -191,6 +212,8 @@
 }
 
 .tf-trip-card__stat {
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: var(--weight-medium);
   color: var(--text-secondary);
 }

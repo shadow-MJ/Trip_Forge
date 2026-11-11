@@ -1,81 +1,101 @@
 :root {
-  /* Tropical Coastal Palette — Light mode */
+  /* Atelier Mono — Off-White & Smoked Espresso Palette (Light Mode) */
   --color-white: #ffffff;
-  --color-sand-50: #faf7f2;
-  --color-sand-100: #f3ede2;
-  --color-sand-200: #e2ddd2;
-  --color-teal-50: #eef7f5;
-  --color-teal-100: #d9eeea;
-  --color-teal-600: #0f766e;
-  --color-teal-700: #0b5d56;
-  --color-teal-800: #0f524c;
-  --color-coral-50: #fdeee8;
-  --color-coral-600: #c84b31;
-  --color-sun-400: #f4a261;
-  --color-sun-100: #fef5e7;
+  --color-alabaster: #faf7f2;
+  --color-parchment: #f4eee5;
+  --color-sand-100: #ebe3d5;
+  --color-sand-200: #e5ded2;
+  --color-sand-300: #cdbeaa;
 
-  /* Semantic tokens — Light mode */
-  --bg-page: var(--color-sand-50);
+  --color-espresso-950: #18110b;
+  --color-espresso-900: #241811;
+  --color-espresso-800: #352317;
+  --color-walnut-700: #442f21;
+  --color-walnut-600: #583e2c;
+  --color-umber-500: #7a6655;
+  --color-stone-400: #a18e7c;
+
+  --color-cognac-600: #944627;
+  --color-cognac-50: #faeee6;
+  --color-bronze-500: #b87a38;
+  --color-bronze-100: #faf2e4;
+
+  /* Backward-compatible aliases for legacy token references */
+  --color-teal-50: var(--color-parchment);
+  --color-teal-100: var(--color-sand-100);
+  --color-teal-600: var(--color-walnut-700);
+  --color-teal-700: var(--color-espresso-800);
+  --color-teal-800: var(--color-espresso-900);
+  --color-coral-50: var(--color-cognac-50);
+  --color-coral-600: var(--color-cognac-600);
+  --color-sun-400: var(--color-bronze-500);
+  --color-sun-100: var(--color-bronze-100);
+
+  /* Semantic UI Tokens — Light Mode */
+  --bg-page: var(--color-alabaster);
   --bg-surface: var(--color-white);
-  --bg-subtle: var(--color-teal-50);
+  --bg-subtle: var(--color-parchment);
   --bg-sand: var(--color-sand-100);
-  --bg-hover: #e6f2ef;
-  --bg-active: var(--color-teal-100);
-  --bg-overlay: rgba(16, 42, 40, 0.45);
+  --bg-hover: #f2ebe0;
+  --bg-active: #e6ddce;
+  --bg-overlay: rgba(24, 17, 11, 0.52);
 
-  --text-primary: #102a28;
-  --text-secondary: #2c4a47;
-  --text-muted: #536e6a;
-  --text-placeholder: #7e9490;
+  --text-primary: var(--color-espresso-950);
+  --text-secondary: #47362a;
+  --text-muted: var(--color-umber-500);
+  --text-placeholder: var(--color-stone-400);
 
   --border-color: var(--color-sand-200);
-  --border-strong: #c2d4cf;
-  --border-focus: var(--color-teal-600);
+  --border-strong: var(--color-sand-300);
+  --border-focus: var(--color-walnut-700);
 
-  --accent-primary: var(--color-teal-600);
-  --accent-soft: #e3f4f1;
-  --accent-warm: var(--color-coral-600);
-  --accent-warm-soft: var(--color-coral-50);
-  --accent-sun: var(--color-sun-400);
-  --accent-sun-soft: var(--color-sun-100);
+  --accent-primary: var(--color-walnut-700);
+  --accent-soft: #f2ebe1;
+  --accent-warm: var(--color-cognac-600);
+  --accent-warm-soft: var(--color-cognac-50);
+  --accent-sun: var(--color-bronze-500);
+  --accent-sun-soft: var(--color-bronze-100);
 
-  --btn-primary-bg: var(--color-teal-600);
-  --btn-primary-hover: var(--color-teal-700);
-  --btn-primary-text: var(--color-white);
+  --btn-primary-bg: var(--color-espresso-900);
+  --btn-primary-hover: var(--color-espresso-950);
+  --btn-primary-text: #faf7f2;
 
   --btn-secondary-bg: var(--color-white);
-  --btn-secondary-hover: var(--color-teal-50);
-  --btn-secondary-text: var(--text-primary);
+  --btn-secondary-hover: var(--color-parchment);
+  --btn-secondary-text: var(--color-espresso-950);
 
-  --badge-bg: #eaf5f3;
-  --badge-border: #c5e2dc;
-  --badge-text: var(--color-teal-800);
+  --badge-bg: #f3eee6;
+  --badge-border: #dfd3c2;
+  --badge-text: var(--color-espresso-800);
 
-  --badge-warm-bg: var(--color-coral-50);
-  --badge-warm-border: #f5cfc2;
-  --badge-warm-text: #9e351f;
+  --badge-warm-bg: var(--color-cognac-50);
+  --badge-warm-border: #eccfbe;
+  --badge-warm-text: #7a321a;
 
-  --progress-track: #dfe9e6;
-  --progress-fill: var(--color-teal-600);
+  --progress-track: var(--color-sand-200);
+  --progress-fill: var(--color-walnut-700);
 
-  --shadow-card: 0 2px 10px rgba(16, 42, 40, 0.04);
-  --shadow-lift: 0 10px 24px rgba(15, 118, 110, 0.1);
-  --shadow-overlay: 0 12px 32px rgba(16, 42, 40, 0.14);
+  --shadow-card: 0 1px 3px rgba(36, 24, 17, 0.04), 0 6px 18px -3px rgba(36, 24, 17, 0.05);
+  --shadow-lift: 0 4px 8px -2px rgba(36, 24, 17, 0.06), 0 18px 36px -6px rgba(36, 24, 17, 0.11);
+  --shadow-overlay: 0 16px 40px rgba(24, 17, 11, 0.22);
+  --shadow-bevel: inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
 
   /* Typography */
-  --font-display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont,
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Newsreader', Georgia, Cambria, 'Times New Roman', serif;
   --font-sans: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, 'Liberation Mono', monospace;
 
-  --text-xs: 0.75rem;     /* 12px */
-  --text-sm: 0.875rem;    /* 14px */
-  --text-base: 1rem;      /* 16px */
-  --text-lg: 1.125rem;    /* 18px */
-  --text-xl: 1.375rem;    /* 22px */
-  --text-2xl: 1.75rem;    /* 28px */
-  --text-3xl: 2.25rem;    /* 36px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.375rem; /* 22px */
+  --text-2xl: 1.75rem; /* 28px */
+  --text-3xl: 2.25rem; /* 36px */
 
   --weight-regular: 400;
   --weight-medium: 500;
@@ -86,7 +106,7 @@
   --leading-normal: 1.55;
   --leading-relaxed: 1.65;
 
-  /* 8px spacing scale */
+  /* Spacing Scale */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -98,7 +118,7 @@
   --space-9: 64px;
 
   /* Radii */
-  --radius-sm: 10px;
+  --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-full: 9999px;
@@ -109,58 +129,60 @@
   --sidebar-width: 240px;
 
   /* Motion */
-  --transition-fast: 150ms ease;
+  --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
 
   color-scheme: light;
 }
 
-[data-theme='dark'] {
-  --bg-page: #0b1716;
-  --bg-surface: #112220;
-  --bg-subtle: #18302d;
-  --bg-sand: #1c2c26;
-  --bg-hover: #1d3834;
-  --bg-active: #244540;
-  --bg-overlay: rgba(5, 14, 13, 0.74);
+[data-theme="dark"] {
+  /* Atelier Obsidian & Burnished Bronze (Dark Mode) */
+  --bg-page: #0e0b08;
+  --bg-surface: #16110d;
+  --bg-subtle: #1f1813;
+  --bg-sand: #251e17;
+  --bg-hover: #2d241c;
+  --bg-active: #382c22;
+  --bg-overlay: rgba(6, 4, 3, 0.82);
 
-  --text-primary: #f3f8f6;
-  --text-secondary: #c6dad6;
-  --text-muted: #8fb0aa;
-  --text-placeholder: #6a8a84;
+  --text-primary: #f7f2ea;
+  --text-secondary: #d8cbbb;
+  --text-muted: #9a8b7c;
+  --text-placeholder: #736556;
 
-  --border-color: #213b37;
-  --border-strong: #335751;
-  --border-focus: #2dd4bf;
+  --border-color: rgba(224, 203, 178, 0.12);
+  --border-strong: rgba(224, 203, 178, 0.22);
+  --border-focus: #d8a268;
 
-  --accent-primary: #2dd4bf;
-  --accent-soft: #143531;
-  --accent-warm: #fb8c6f;
-  --accent-warm-soft: #34201c;
-  --accent-sun: #f5b971;
-  --accent-sun-soft: #2b2416;
+  --accent-primary: #d8a268;
+  --accent-soft: #241b14;
+  --accent-warm: #e27e57;
+  --accent-warm-soft: #382117;
+  --accent-sun: #e9b575;
+  --accent-sun-soft: #332415;
 
-  --btn-primary-bg: #2dd4bf;
-  --btn-primary-hover: #5eead4;
-  --btn-primary-text: #071d1a;
+  --btn-primary-bg: #d8a268;
+  --btn-primary-hover: #e5b37e;
+  --btn-primary-text: #120d08;
 
-  --btn-secondary-bg: #142826;
-  --btn-secondary-hover: #1e3b37;
-  --btn-secondary-text: #f3f8f6;
+  --btn-secondary-bg: #1e1712;
+  --btn-secondary-hover: #2a2019;
+  --btn-secondary-text: #f7f2ea;
 
-  --badge-bg: #173430;
-  --badge-border: #264d47;
-  --badge-text: #a7eae0;
+  --badge-bg: #261d15;
+  --badge-border: #443325;
+  --badge-text: #f2d8bb;
 
-  --badge-warm-bg: #36201b;
-  --badge-warm-border: #5a342c;
-  --badge-warm-text: #ffb49e;
+  --badge-warm-bg: #382117;
+  --badge-warm-border: #5e3422;
+  --badge-warm-text: #ffbba2;
 
-  --progress-track: #1f3b37;
-  --progress-fill: #2dd4bf;
+  --progress-track: #2a2017;
+  --progress-fill: #d8a268;
 
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.24);
-  --shadow-lift: 0 10px 26px rgba(0, 0, 0, 0.36);
-  --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lift: 0 12px 36px -4px rgba(0, 0, 0, 0.7);
+  --shadow-overlay: 0 16px 48px rgba(0, 0, 0, 0.85);
+  --shadow-bevel: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
 
   color-scheme: dark;
 }

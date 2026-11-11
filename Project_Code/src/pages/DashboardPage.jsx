@@ -109,10 +109,10 @@ export default function DashboardPage() {
       <section className="tf-dash-hero">
         <div>
           <span className="badge badge-warm tf-dash-hero__badge">
-            <SunIcon size={13} />
-            Trip hub · {pluralize(trips.length, 'active escape')}
+            <SunIcon size={12} />
+            EXPEDITIONS // {pluralize(trips.length, 'ACTIVE DOSSIER')}
           </span>
-          <h1 className="page-title">Ready for your next trip, {firstName}?</h1>
+          <h1 className="page-title">Ready for your next expedition, <em className="serif-accent">{firstName}</em>?</h1>
           <p className="page-subtitle">
             Keep itineraries, group polls, and BDT expenses moving smoothly together.
           </p>

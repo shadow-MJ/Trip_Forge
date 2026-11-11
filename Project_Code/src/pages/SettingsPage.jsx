@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Card from '../components/Card';
-import { useAuth } from '../context/useAuth';
-import { applyTheme, getSavedTheme } from '../utils/theme';
-import './SettingsPage.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Card from "../components/Card";
+import { useAuth } from "../context/useAuth";
+import { applyTheme, getSavedTheme } from "../utils/theme";
+import "./SettingsPage.css";
 
-const PREFS_KEY = 'tripforge_notification_prefs';
+const PREFS_KEY = "tripforge_notification_prefs";
 
 function loadNotificationPrefs() {
   try {
@@ -28,13 +28,13 @@ export default function SettingsPage() {
 
   const [theme, setTheme] = useState(getSavedTheme);
   const [prefs, setPrefs] = useState(loadNotificationPrefs);
-  const [savedToast, setSavedToast] = useState('');
+  const [savedToast, setSavedToast] = useState("");
 
   function handleThemeChange(nextTheme) {
     const applied = applyTheme(nextTheme);
     setTheme(applied);
     setSavedToast(
-      `Switched to ${applied === 'dark' ? 'dark lagoon' : 'light tropical'} mode.`
+      `Switched to ${applied === 'dark' ? 'dark obsidian' : 'off-white light'} mode.`
     );
   }
 
@@ -48,12 +48,12 @@ export default function SettingsPage() {
       }
       return next;
     });
-    setSavedToast('Notification preference updated.');
+    setSavedToast("Notification preference updated.");
   }
 
   async function handleSignOut() {
     await logout();
-    navigate('/');
+    navigate("/");
   }
 
   return (
@@ -63,7 +63,7 @@ export default function SettingsPage() {
           <div>
             <h1 className="page-title">Settings</h1>
             <p className="page-subtitle">
-              Customize tropical appearance and in-app notification preferences.
+              Customize appearance and in-app notification preferences.
             </p>
           </div>
           {savedToast && (
@@ -76,23 +76,30 @@ export default function SettingsPage() {
         <div className="tf-settings__stack">
           <Card
             title="Appearance"
-            subtitle="Switch between sunlit tropical light and night lagoon dark modes."
+            subtitle="Switch between warm off-white light and dark obsidian espresso modes."
           >
-            <div className="tf-settings__theme-grid" role="radiogroup" aria-label="Theme mode">
+            <div
+              className="tf-settings__theme-grid"
+              role="radiogroup"
+              aria-label="Theme mode"
+            >
               <button
                 type="button"
                 role="radio"
-                aria-checked={theme === 'light'}
+                aria-checked={theme === "light"}
                 className={`tf-settings__theme-option ${
-                  theme === 'light' ? 'tf-settings__theme-option--active' : ''
+                  theme === "light" ? "tf-settings__theme-option--active" : ""
                 }`}
-                onClick={() => handleThemeChange('light')}
+                onClick={() => handleThemeChange("light")}
               >
-                <span className="tf-settings__swatch tf-settings__swatch--light" aria-hidden="true" />
+                <span
+                  className="tf-settings__swatch tf-settings__swatch--light"
+                  aria-hidden="true"
+                />
                 <div>
-                  <p className="tf-settings__option-title">Light tropical</p>
+                  <p className="tf-settings__option-title">Off-white light</p>
                   <p className="tf-settings__option-desc">
-                    Warm coastal sand with lagoon teal accents
+                    Warm alabaster and raw linen with smoked espresso accents
                   </p>
                 </div>
               </button>
@@ -100,17 +107,20 @@ export default function SettingsPage() {
               <button
                 type="button"
                 role="radio"
-                aria-checked={theme === 'dark'}
+                aria-checked={theme === "dark"}
                 className={`tf-settings__theme-option ${
-                  theme === 'dark' ? 'tf-settings__theme-option--active' : ''
+                  theme === "dark" ? "tf-settings__theme-option--active" : ""
                 }`}
-                onClick={() => handleThemeChange('dark')}
+                onClick={() => handleThemeChange("dark")}
               >
-                <span className="tf-settings__swatch tf-settings__swatch--dark" aria-hidden="true" />
+                <span
+                  className="tf-settings__swatch tf-settings__swatch--dark"
+                  aria-hidden="true"
+                />
                 <div>
-                  <p className="tf-settings__option-title">Dark lagoon</p>
+                  <p className="tf-settings__option-title">Obsidian & bronze</p>
                   <p className="tf-settings__option-desc">
-                    Deep night palm surfaces with luminous turquoise
+                    Deep roasted obsidian surfaces with burnished gold bronze
                   </p>
                 </div>
               </button>
@@ -122,7 +132,10 @@ export default function SettingsPage() {
             subtitle="Choose which workspace updates appear in your notification panel."
           >
             <div className="tf-settings__toggles">
-              <label className="tf-settings__toggle-row" htmlFor="pref-itinerary">
+              <label
+                className="tf-settings__toggle-row"
+                htmlFor="pref-itinerary"
+              >
                 <div>
                   <p className="tf-settings__option-title">Itinerary updates</p>
                   <p className="tf-settings__option-desc">
@@ -134,7 +147,7 @@ export default function SettingsPage() {
                   type="checkbox"
                   className="tf-settings__checkbox"
                   checked={prefs.itinerary}
-                  onChange={() => handlePrefToggle('itinerary')}
+                  onChange={() => handlePrefToggle("itinerary")}
                 />
               </label>
 
@@ -150,11 +163,14 @@ export default function SettingsPage() {
                   type="checkbox"
                   className="tf-settings__checkbox"
                   checked={prefs.ideasAndPolls}
-                  onChange={() => handlePrefToggle('ideasAndPolls')}
+                  onChange={() => handlePrefToggle("ideasAndPolls")}
                 />
               </label>
 
-              <label className="tf-settings__toggle-row" htmlFor="pref-expenses">
+              <label
+                className="tf-settings__toggle-row"
+                htmlFor="pref-expenses"
+              >
                 <div>
                   <p className="tf-settings__option-title">Expense entries</p>
                   <p className="tf-settings__option-desc">
@@ -166,13 +182,18 @@ export default function SettingsPage() {
                   type="checkbox"
                   className="tf-settings__checkbox"
                   checked={prefs.expenses}
-                  onChange={() => handlePrefToggle('expenses')}
+                  onChange={() => handlePrefToggle("expenses")}
                 />
               </label>
 
-              <label className="tf-settings__toggle-row" htmlFor="pref-discussion">
+              <label
+                className="tf-settings__toggle-row"
+                htmlFor="pref-discussion"
+              >
                 <div>
-                  <p className="tf-settings__option-title">Discussion replies</p>
+                  <p className="tf-settings__option-title">
+                    Discussion replies
+                  </p>
                   <p className="tf-settings__option-desc">
                     When members post notes or reply to threads
                   </p>
@@ -182,19 +203,26 @@ export default function SettingsPage() {
                   type="checkbox"
                   className="tf-settings__checkbox"
                   checked={prefs.discussion}
-                  onChange={() => handlePrefToggle('discussion')}
+                  onChange={() => handlePrefToggle("discussion")}
                 />
               </label>
             </div>
           </Card>
 
-          <Card title="Account session" subtitle="Currently active authentication session.">
+          <Card
+            title="Account session"
+            subtitle="Currently active authentication session."
+          >
             <div className="tf-settings__account-row">
               <div>
                 <p className="tf-settings__option-title">{user?.name}</p>
                 <p className="tf-settings__option-desc">{user?.email}</p>
               </div>
-              <button type="button" className="btn btn-secondary" onClick={handleSignOut}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleSignOut}
+              >
                 Sign out
               </button>
             </div>

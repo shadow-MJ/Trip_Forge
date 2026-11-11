@@ -3,8 +3,8 @@
   background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  box-shadow: var(--shadow-card), var(--shadow-bevel);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .tf-card--default {
@@ -21,6 +21,8 @@
 
 .tf-card--interactive:hover {
   border-color: var(--border-strong);
+  box-shadow: var(--shadow-lift), var(--shadow-bevel);
+  transform: translateY(-1px);
 }
 
 .tf-card__header {
