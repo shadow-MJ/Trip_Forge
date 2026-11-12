@@ -34,7 +34,7 @@ export default function SettingsPage() {
     const applied = applyTheme(nextTheme);
     setTheme(applied);
     setSavedToast(
-      `Switched to ${applied === 'dark' ? 'dark obsidian' : 'off-white light'} mode.`
+      `Switched to ${applied === "dark" ? "dark obsidian" : "off-white light"} mode.`,
     );
   }
 

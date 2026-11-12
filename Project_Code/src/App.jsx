@@ -1,6 +1,7 @@
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { AuthProvider } from './context/AuthContext';
+import BangladeshMapPage from './pages/BangladeshMapPage';
 import CreateTripPage from './pages/CreateTripPage';
 import DashboardPage from './pages/DashboardPage';
 import LandingPage from './pages/LandingPage';
@@ -57,6 +58,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/map" element={<BangladeshMapPage />} />
           <Route
             path="/trips/new"
             element={

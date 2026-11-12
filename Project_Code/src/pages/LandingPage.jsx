@@ -16,30 +16,33 @@ import "./LandingPage.css";
 
 const PILLARS = [
   {
-    tone: 'walnut',
+    tone: "walnut",
     Icon: CalendarIcon,
-    title: 'Shared itinerary & quick polls',
-    description: 'Structure multi-day trails together, vote on campsites and routes, and settle group decisions in minutes.',
+    title: "Shared itinerary & quick polls",
+    description:
+      "Structure multi-day trails together, vote on campsites and routes, and settle group decisions in minutes.",
   },
   {
-    tone: 'cognac',
+    tone: "cognac",
     Icon: WalletIcon,
-    title: 'BDT expense splitting',
-    description: 'Track group expenditures in BDT (৳3k–15k group budgets) with exact who-pays-whom balance settlements.',
+    title: "BDT expense splitting",
+    description:
+      "Track group expenditures in BDT (৳3k–15k group budgets) with exact who-pays-whom balance settlements.",
   },
   {
-    tone: 'bronze',
+    tone: "bronze",
     Icon: ListCheckIcon,
-    title: 'Packing & trip summary',
-    description: 'Distribute gear across friends, check off essentials, and export a clean, unified travel dossier.',
+    title: "Packing & trip summary",
+    description:
+      "Distribute gear across friends, check off essentials, and export a clean, unified travel dossier.",
   },
 ];
 
 const PREVIEW_MEMBERS = [
-  { id: 'p1', name: 'Joy M' },
-  { id: 'p2', name: 'Mahmud Rana Tonmoy' },
-  { id: 'p3', name: 'Nadia Karim' },
-  { id: 'p4', name: 'Tariq Hasan' },
+  { id: "p1", name: "Joy M" },
+  { id: "p2", name: "Mahmud Rana Tonmoy" },
+  { id: "p3", name: "Nadia Karim" },
+  { id: "p4", name: "Tariq Hasan" },
 ];
 
 export default function LandingPage() {
@@ -56,12 +59,14 @@ export default function LandingPage() {
             </span>
 
             <h1 className="tf-landing__title">
-              Plan unforgettable escapes <em className="serif-accent tf-hero-serif">together</em>.
+              Plan unforgettable escapes{" "}
+              <em className="serif-accent tf-hero-serif">together</em>.
             </h1>
 
             <p className="tf-landing__subtitle">
               Replace chaotic group chats with one serene, tactile workspace for
-              shared itineraries, quick polls, BDT expense settlements, and collective gear packing.
+              shared itineraries, quick polls, BDT expense settlements, and
+              collective gear packing.
             </p>
 
             <div className="tf-landing__cta">
@@ -121,10 +126,7 @@ export default function LandingPage() {
                       <strong className="mono-num">৳14,500 / ৳20,000</strong>
                     </div>
                     <div className="progress-track" aria-hidden="true">
-                      <div
-                        className="progress-fill"
-                        style={{ width: '72%' }}
-                      />
+                      <div className="progress-fill" style={{ width: "72%" }} />
                     </div>
                   </div>
 
@@ -136,7 +138,7 @@ export default function LandingPage() {
                     <div className="progress-track" aria-hidden="true">
                       <div
                         className="progress-fill tf-progress-warm"
-                        style={{ width: '75%' }}
+                        style={{ width: "75%" }}
                       />
                     </div>
                   </div>
@@ -153,7 +155,9 @@ export default function LandingPage() {
             const Icon = pillar.Icon;
             return (
               <div key={pillar.title} className="tf-landing__pillar">
-                <span className={`tf-pillar-icon tf-pillar-icon--${pillar.tone}`}>
+                <span
+                  className={`tf-pillar-icon tf-pillar-icon--${pillar.tone}`}
+                >
                   <Icon size={20} />
                 </span>
                 <h3 className="tf-landing__pillar-title">{pillar.title}</h3>
@@ -167,7 +171,9 @@ export default function LandingPage() {
       <footer className="tf-landing__footer no-print">
         <div className="container tf-landing__footer-inner">
           <p>© 2026 TripForge Atelier · Collaborative expedition planning</p>
-          <p className="muted-text mono-num">Crafted for mindful travel in Bangladesh & beyond</p>
+          <p className="muted-text mono-num">
+            Crafted for mindful travel in Bangladesh & beyond
+          </p>
         </div>
       </footer>
     </main>

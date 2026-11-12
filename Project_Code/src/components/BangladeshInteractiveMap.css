@@ -1,0 +1,301 @@
+.tf-bd-map-wrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-surface);
+  box-shadow: var(--shadow-card), var(--shadow-bevel);
+  overflow: hidden;
+}
+
+.tf-bd-map-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-surface-tint);
+}
+
+.tf-bd-map-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.tf-bd-map-legend__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  background-color: #d13a3a;
+  box-shadow: 0 0 0 2px rgba(209, 58, 58, 0.25);
+  flex-shrink: 0;
+}
+
+.tf-bd-map-legend__text {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-weight: var(--weight-medium);
+}
+
+.tf-bd-map-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tf-bd-map-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: var(--weight-bold);
+  border-radius: var(--radius-sm);
+  line-height: 1;
+}
+
+.tf-bd-map-btn-reset {
+  padding: 2px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+
+.tf-bd-map-btn-toggle {
+  padding: 2px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.2px;
+}
+
+.tf-bd-map-viewport {
+  position: relative;
+  overflow: auto;
+  scrollbar-width: thin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f2ea;
+  padding: var(--space-3);
+  min-height: 520px;
+}
+
+[data-theme='dark'] .tf-bd-map-viewport {
+  background-color: #1a1512;
+}
+
+.tf-bd-map-stage {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.tf-bd-map-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] .tf-bd-map-image {
+  filter: brightness(0.9) contrast(1.05);
+}
+
+.tf-bd-map-pins {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tf-bd-pin-anchor {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  z-index: 2;
+  transition: opacity var(--transition-fast), transform 0.15s ease-out;
+}
+
+.tf-bd-pin-anchor--dimmed {
+  opacity: 0.3;
+}
+
+.tf-bd-pin-anchor--selected {
+  z-index: 10;
+}
+
+.tf-bd-pin-target {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tf-bd-pin-target:hover,
+.tf-bd-pin-target:focus-visible {
+  transform: scale(1.35);
+}
+
+.tf-bd-pin-core {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  background-color: #d13a3a;
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.tf-bd-pin-target:hover .tf-bd-pin-core,
+.tf-bd-pin-target--selected .tf-bd-pin-core {
+  background-color: #ba2323;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 10px rgba(209, 58, 58, 0.6);
+}
+
+.tf-bd-pin-pulse {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  border: 2px solid #d13a3a;
+  animation: tf-pin-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes tf-pin-ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  80%, 100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.tf-bd-pin-name-label {
+  position: absolute;
+  top: calc(50% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.95),
+    0 0 3px rgba(0, 0, 0, 0.9),
+    1px 0 2px rgba(0, 0, 0, 0.9),
+    -1px 0 2px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+  pointer-events: none;
+  line-height: 1;
+  user-select: none;
+  letter-spacing: -0.1px;
+  transition: opacity var(--transition-fast);
+}
+
+.tf-bd-pin-anchor--dimmed .tf-bd-pin-name-label {
+  opacity: 0.2;
+}
+
+.tf-bd-pin-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--text-primary);
+  color: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  padding: 5px 9px;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  z-index: 20;
+  animation: tf-tooltip-pop 0.15s ease-out;
+}
+
+.tf-bd-pin-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: var(--text-primary) transparent transparent transparent;
+}
+
+@keyframes tf-tooltip-pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.tf-bd-pin-tooltip__name {
+  font-weight: var(--weight-bold);
+  font-size: 11.5px;
+  line-height: 1.2;
+}
+
+.tf-bd-pin-tooltip__bn {
+  font-size: 10px;
+  opacity: 0.85;
+}
+
+.tf-bd-pin-tooltip__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 1px 5px;
+  border-radius: var(--radius-full);
+  margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+  .tf-bd-map-viewport {
+    min-height: 420px;
+    padding: var(--space-2);
+  }
+
+  .tf-bd-map-stage {
+    max-width: 100%;
+  }
+
+  .tf-bd-pin-target {
+    width: 22px;
+    height: 22px;
+  }
+
+  .tf-bd-pin-core {
+    width: 8px;
+    height: 8px;
+  }
+}

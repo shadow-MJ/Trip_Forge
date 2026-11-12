@@ -17,8 +17,9 @@
     );
 }
 
-[data-theme='dark'] .tf-auth-page {
-  background: radial-gradient(
+[data-theme="dark"] .tf-auth-page {
+  background:
+    radial-gradient(
       circle at 20% 20%,
       rgba(216, 162, 104, 0.1) 0%,
       transparent 45%
