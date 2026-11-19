@@ -14,13 +14,16 @@ export async function login({ email, password }) {
   const matched = mockUsers.find((u) => u.email.toLowerCase() === normalizedEmail);
 
   if (!matched || matched.password !== password) {
-    throw new Error('Invalid email or password. Try ranatonmoy33@gmail.com / tonmoy1234.');
+    throw new Error(
+      'Invalid email or password. Try bijoyhasan1612@gmail.com / @1111111 or ranatonmoy33@gmail.com / tonmoy1234.'
+    );
   }
 
   const safeUser = {
     id: matched.id,
     name: matched.name,
     email: matched.email,
+    phone: matched.phone || '',
     bio: matched.bio,
     university: matched.university,
     department: matched.department || '',
@@ -42,11 +45,12 @@ export async function register({
   name,
   email,
   password,
+  phone = '',
   university = '',
   department = '',
 }) {
   // TODO: Replace mock registration with real REST endpoint:
-  // const response = await apiClient.post('/auth/register', { name, email, password, university, department });
+  // const response = await apiClient.post('/auth/register', { name, email, password, phone, university, department });
   // return response.data;
   await simulateNetworkDelay(280);
 
@@ -61,6 +65,7 @@ export async function register({
     name: name.trim(),
     email: normalizedEmail,
     password,
+    phone: phone.trim(),
     bio: 'Ready to plan the next group trip.',
     university: university.trim(),
     department: department.trim(),
@@ -72,6 +77,7 @@ export async function register({
     id: newUser.id,
     name: newUser.name,
     email: newUser.email,
+    phone: newUser.phone,
     bio: newUser.bio,
     university: newUser.university,
     department: newUser.department,
@@ -116,6 +122,7 @@ export async function updateProfile(userId, updates) {
     mockUsers[idx] = {
       ...mockUsers[idx],
       name: updates.name?.trim() || mockUsers[idx].name,
+      phone: updates.phone !== undefined ? updates.phone.trim() : mockUsers[idx].phone || '',
       bio: updates.bio !== undefined ? updates.bio.trim() : mockUsers[idx].bio,
       university:
         updates.university !== undefined ? updates.university.trim() : mockUsers[idx].university,
@@ -139,6 +146,7 @@ export async function updateProfile(userId, updates) {
     id: userId,
     name: updates.name?.trim() || currentSaved?.name || 'TripForge User',
     email: currentSaved?.email || mockUsers[idx]?.email || '',
+    phone: updates.phone !== undefined ? updates.phone.trim() : currentSaved?.phone || '',
     bio: updates.bio !== undefined ? updates.bio.trim() : currentSaved?.bio || '',
     university:
       updates.university !== undefined

@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { getMembers, regenerateInviteCode, removeMember } from '../../api/membersApi';
+import {
+  approveJoinRequest,
+  getMembers,
+  getPendingJoinRequests,
+  regenerateInviteCode,
+  rejectJoinRequest,
+  removeMember,
+} from '../../api/membersApi';
 import Card from '../../components/Card';
 import EmptyState from '../../components/EmptyState';
 import ErrorState from '../../components/ErrorState';
@@ -16,6 +23,7 @@ export default function TripMembersPage() {
   const { user } = useAuth();
 
   const [members, setMembers] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
   const [customInviteCode, setCustomInviteCode] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -24,17 +32,24 @@ export default function TripMembersPage() {
   const [copied, setCopied] = useState(false);
   const [regenerating, setRegenerating] = useState(false);
   const [actionError, setActionError] = useState('');
+  const [approvalMessage, setApprovalMessage] = useState('');
+  const [processingReqId, setProcessingReqId] = useState(null);
 
   const inviteCode = customInviteCode ?? trip.inviteCode;
+  const isCreator = trip.userRole === 'Trip Creator';
 
   useEffect(() => {
     let active = true;
 
-    async function fetchMembers() {
+    async function fetchTripMembersAndRequests() {
       try {
-        const data = await getMembers(trip.id);
+        const [membersData, requestsData] = await Promise.all([
+          getMembers(trip.id),
+          isCreator ? getPendingJoinRequests(trip.id) : Promise.resolve([]),
+        ]);
         if (!active) return;
-        setMembers(data);
+        setMembers(membersData);
+        setPendingRequests(requestsData);
         setError('');
       } catch (err) {
         if (!active) return;
@@ -44,16 +59,54 @@ export default function TripMembersPage() {
       }
     }
 
-    fetchMembers();
+    fetchTripMembersAndRequests();
     return () => {
       active = false;
     };
-  }, [trip.id, reloadKey]);
+  }, [trip.id, isCreator, reloadKey]);
 
   function handleRetry() {
     setLoading(true);
     setError('');
     setReloadKey((k) => k + 1);
+  }
+
+  async function handleApproveRequest(req) {
+    setProcessingReqId(req.id);
+    setActionError('');
+    setApprovalMessage('');
+    try {
+      const result = await approveJoinRequest(trip.id, req.id, user?.name);
+      setPendingRequests((prev) => prev.filter((r) => r.id !== req.id));
+      if (result.member) {
+        setMembers((prev) => {
+          if (prev.some((m) => m.id === result.member.id)) return prev;
+          return [...prev, result.member];
+        });
+      }
+      setApprovalMessage(`Approved ${req.name} to join the trip.`);
+      await refreshTrip();
+    } catch (err) {
+      setActionError(err.message || 'Could not approve join request.');
+    } finally {
+      setProcessingReqId(null);
+    }
+  }
+
+  async function handleDeclineRequest(req) {
+    setProcessingReqId(req.id);
+    setActionError('');
+    setApprovalMessage('');
+    try {
+      await rejectJoinRequest(trip.id, req.id, user?.name);
+      setPendingRequests((prev) => prev.filter((r) => r.id !== req.id));
+      setApprovalMessage(`Declined join request from ${req.name}.`);
+      await refreshTrip();
+    } catch (err) {
+      setActionError(err.message || 'Could not decline join request.');
+    } finally {
+      setProcessingReqId(null);
+    }
   }
 
   async function handleCopyCode() {
@@ -92,8 +145,6 @@ export default function TripMembersPage() {
       setActionError(err.message || 'Could not remove member.');
     }
   }
-
-  const isCreator = trip.userRole === 'Trip Creator';
 
   return (
     <div className="tf-mod-stack">
@@ -145,6 +196,78 @@ export default function TripMembersPage() {
         <div className="form-error" role="alert">
           {actionError}
         </div>
+      )}
+
+      {approvalMessage && (
+        <div className="form-success tf-approval-banner" role="status">
+          <CheckIcon size={16} />
+          <span>{approvalMessage}</span>
+        </div>
+      )}
+
+      {isCreator && (
+        <Card
+          title={
+            <div className="tf-pending-card-title">
+              <span>Pending join requests</span>
+              {pendingRequests.length > 0 && (
+                <span className="badge badge-warm">{pendingRequests.length}</span>
+              )}
+            </div>
+          }
+          subtitle="Review and approve requests from travelers who entered your trip invite code."
+        >
+          {loading ? (
+            <Loader inline label="Checking pending requests..." />
+          ) : pendingRequests.length === 0 ? (
+            <p className="tf-pending-empty-note">
+              No pending requests. When someone enters your invite code, their request will appear here for your approval.
+            </p>
+          ) : (
+            <ul className="tf-member-list">
+              {pendingRequests.map((req) => (
+                <li key={req.id} className="tf-member-row tf-member-row--pending">
+                  <div className="tf-member-row__info">
+                    <span className="tf-avatar-sm tf-avatar-sm--pending">
+                      {getInitials(req.name)}
+                    </span>
+                    <div>
+                      <p className="tf-member-row__name">
+                        {req.name}
+                        <span className="badge badge-warm tf-pending-badge">
+                          Awaiting approval
+                        </span>
+                      </p>
+                      <p className="tf-member-row__email">
+                        {req.email} · Requested {formatFullDate(req.requestedAt?.slice(0, 10))}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="inline-actions">
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => handleDeclineRequest(req)}
+                      disabled={processingReqId === req.id}
+                    >
+                      {processingReqId === req.id ? 'Processing...' : 'Decline'}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={() => handleApproveRequest(req)}
+                      disabled={processingReqId === req.id}
+                    >
+                      <CheckIcon size={14} />
+                      {processingReqId === req.id ? 'Approving...' : 'Approve'}
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
       )}
 
       <Card

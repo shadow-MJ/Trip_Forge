@@ -50,7 +50,8 @@
 }
 
 .tf-map__coords {
-  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-size: 11px;
   color: var(--text-muted);
 }
 
@@ -84,6 +85,7 @@
   border: 1px solid var(--badge-border);
   background-color: var(--accent-soft);
   color: var(--badge-text);
+  font-family: var(--font-mono);
   display: inline-flex;
   align-items: center;
   justify-content: center;

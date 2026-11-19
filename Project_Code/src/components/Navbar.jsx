@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { getUnreadNotificationCount } from '../api/notificationsApi';
-import { useAuth } from '../context/useAuth';
-import { getInitials } from '../utils/formatters';
-import { BellIcon, BrandIcon, CloseIcon, MenuIcon } from './Icons';
-import NotificationsPanel from './NotificationsPanel';
-import './Navbar.css';
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { getUnreadNotificationCount } from "../api/notificationsApi";
+import { useAuth } from "../context/useAuth";
+import { getInitials } from "../utils/formatters";
+import { BellIcon, BrandIcon, CloseIcon, MenuIcon } from "./Icons";
+import NotificationsPanel from "./NotificationsPanel";
+import "./Navbar.css";
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -35,10 +35,16 @@ export default function Navbar() {
       fetchCount();
     }
 
-    window.addEventListener('tripforge:notifications-updated', handleNotificationsSync);
+    window.addEventListener(
+      "tripforge:notifications-updated",
+      handleNotificationsSync,
+    );
     return () => {
       active = false;
-      window.removeEventListener('tripforge:notifications-updated', handleNotificationsSync);
+      window.removeEventListener(
+        "tripforge:notifications-updated",
+        handleNotificationsSync,
+      );
     };
   }, [isAuthenticated, location.pathname]);
 
@@ -47,14 +53,17 @@ export default function Navbar() {
   async function handleLogout() {
     setOpenMenuPath(null);
     await logout();
-    navigate('/');
+    navigate("/");
   }
 
   return (
     <>
       <header className="tf-navbar no-print">
         <div className="container tf-navbar__inner">
-          <Link to={isAuthenticated ? '/dashboard' : '/'} className="tf-navbar__brand">
+          <Link
+            to={isAuthenticated ? "/dashboard" : "/"}
+            className="tf-navbar__brand"
+          >
             <span className="tf-navbar__logo">
               <BrandIcon size={18} />
             </span>
@@ -67,15 +76,23 @@ export default function Navbar() {
                 <NavLink
                   to="/dashboard"
                   className={({ isActive }) =>
-                    `tf-navbar__link ${isActive ? 'tf-navbar__link--active' : ''}`
+                    `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
                   Trips
                 </NavLink>
                 <NavLink
+                  to="/map"
+                  className={({ isActive }) =>
+                    `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
+                  }
+                >
+                  Map
+                </NavLink>
+                <NavLink
                   to="/trips/new"
                   className={({ isActive }) =>
-                    `tf-navbar__link ${isActive ? 'tf-navbar__link--active' : ''}`
+                    `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
                   New trip
@@ -83,7 +100,7 @@ export default function Navbar() {
                 <NavLink
                   to="/profile"
                   className={({ isActive }) =>
-                    `tf-navbar__link ${isActive ? 'tf-navbar__link--active' : ''}`
+                    `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
                   Profile
@@ -91,7 +108,7 @@ export default function Navbar() {
                 <NavLink
                   to="/settings"
                   className={({ isActive }) =>
-                    `tf-navbar__link ${isActive ? 'tf-navbar__link--active' : ''}`
+                    `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
                   Settings
@@ -101,24 +118,42 @@ export default function Navbar() {
                   type="button"
                   className="btn btn-ghost tf-navbar__bell"
                   onClick={() => setPanelOpen(true)}
-                  aria-label={`Open notifications${effectiveUnreadCount > 0 ? `, ${effectiveUnreadCount} unread` : ''}`}
+                  aria-label={`Open notifications${effectiveUnreadCount > 0 ? `, ${effectiveUnreadCount} unread` : ""}`}
                 >
                   <BellIcon size={18} />
                   {effectiveUnreadCount > 0 && (
-                    <span className="tf-navbar__badge">{effectiveUnreadCount}</span>
+                    <span className="tf-navbar__badge">
+                      {effectiveUnreadCount}
+                    </span>
                   )}
                 </button>
 
-                <Link to="/profile" className="tf-navbar__avatar" title={user?.name}>
+                <Link
+                  to="/profile"
+                  className="tf-navbar__avatar"
+                  title={user?.name}
+                >
                   {getInitials(user?.name)}
                 </Link>
 
-                <button type="button" className="btn btn-secondary btn-sm" onClick={handleLogout}>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={handleLogout}
+                >
                   Sign out
                 </button>
               </>
             ) : (
               <>
+                <NavLink
+                  to="/map"
+                  className={({ isActive }) =>
+                    `btn btn-ghost btn-sm ${isActive ? "btn-secondary" : ""}`
+                  }
+                >
+                  Map
+                </NavLink>
                 <Link to="/login" className="btn btn-ghost btn-sm">
                   Sign in
                 </Link>
@@ -135,11 +170,13 @@ export default function Navbar() {
                 type="button"
                 className="btn btn-ghost btn-icon tf-navbar__bell"
                 onClick={() => setPanelOpen(true)}
-                aria-label={`Open notifications${effectiveUnreadCount > 0 ? `, ${effectiveUnreadCount} unread` : ''}`}
+                aria-label={`Open notifications${effectiveUnreadCount > 0 ? `, ${effectiveUnreadCount} unread` : ""}`}
               >
                 <BellIcon size={18} />
                 {effectiveUnreadCount > 0 && (
-                  <span className="tf-navbar__badge">{effectiveUnreadCount}</span>
+                  <span className="tf-navbar__badge">
+                    {effectiveUnreadCount}
+                  </span>
                 )}
               </button>
             )}
@@ -152,7 +189,11 @@ export default function Navbar() {
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <CloseIcon size={18} /> : <MenuIcon size={18} />}
+              {mobileMenuOpen ? (
+                <CloseIcon size={18} />
+              ) : (
+                <MenuIcon size={18} />
+              )}
             </button>
           </div>
         </div>
@@ -169,6 +210,13 @@ export default function Navbar() {
                   Trips
                 </NavLink>
                 <NavLink
+                  to="/map"
+                  className="tf-navbar__mobile-link"
+                  onClick={() => setOpenMenuPath(null)}
+                >
+                  Map
+                </NavLink>
+                <NavLink
                   to="/trips/new"
                   className="tf-navbar__mobile-link"
                   onClick={() => setOpenMenuPath(null)}
@@ -180,7 +228,8 @@ export default function Navbar() {
                   className="tf-navbar__mobile-link"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Notifications {effectiveUnreadCount > 0 ? `(${effectiveUnreadCount})` : ''}
+                  Notifications{" "}
+                  {effectiveUnreadCount > 0 ? `(${effectiveUnreadCount})` : ""}
                 </NavLink>
                 <NavLink
                   to="/profile"
@@ -196,12 +245,25 @@ export default function Navbar() {
                 >
                   Settings
                 </NavLink>
-                <button type="button" className="btn btn-secondary" onClick={handleLogout}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleLogout}
+                >
                   Sign out
                 </button>
               </div>
             ) : (
               <div className="tf-navbar__mobile-links">
+                <NavLink
+                  to="/map"
+                  className={({ isActive }) =>
+                    `btn ${isActive ? "btn-primary" : "btn-secondary"}`
+                  }
+                  onClick={() => setOpenMenuPath(null)}
+                >
+                  Map
+                </NavLink>
                 <Link
                   to="/login"
                   className="btn btn-secondary"

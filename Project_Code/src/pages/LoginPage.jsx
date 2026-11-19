@@ -20,9 +20,14 @@ export default function LoginPage() {
 
   const from = location.state?.from?.pathname || '/dashboard';
 
-  function handleFillDemo() {
-    setEmail('ranatonmoy33@gmail.com');
-    setPassword('tonmoy1234');
+  function handleFillDemo(account = 'joy') {
+    if (account === 'tonmoy') {
+      setEmail('ranatonmoy33@gmail.com');
+      setPassword('tonmoy1234');
+    } else {
+      setEmail('bijoyhasan1612@gmail.com');
+      setPassword('@1111111');
+    }
     setError('');
   }
 
@@ -75,7 +80,7 @@ export default function LoginPage() {
                   id="login-email"
                   type="email"
                   className="form-input"
-                  placeholder="ranatonmoy33@gmail.com"
+                  placeholder="name@campus.edu"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
@@ -105,19 +110,37 @@ export default function LoginPage() {
             </form>
 
             <div className="tf-auth-demo-box">
-              <div>
-                <p className="tf-auth-demo-title">Demo account</p>
-                <p className="tf-auth-demo-creds">
-                  ranatonmoy33@gmail.com · tonmoy1234
-                </p>
+              <div className="tf-auth-demo-row">
+                <div>
+                  <p className="tf-auth-demo-title">Demo account · Joy</p>
+                  <p className="tf-auth-demo-creds">
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => handleFillDemo('joy')}
+                >
+                  Fill credentials
+                </button>
               </div>
-              <button
-                type="button"
-                className="btn btn-secondary btn-sm"
-                onClick={handleFillDemo}
-              >
-                Fill credentials
-              </button>
+
+              <div className="tf-auth-demo-divider" />
+
+              <div className="tf-auth-demo-row">
+                <div>
+                  <p className="tf-auth-demo-title">Demo account · Tonmoy</p>
+                  <p className="tf-auth-demo-creds">
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => handleFillDemo('tonmoy')}
+                >
+                  Fill credentials
+                </button>
+              </div>
             </div>
 
             <p className="tf-auth-switch">

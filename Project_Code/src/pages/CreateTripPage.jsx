@@ -1,23 +1,23 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { createTrip } from '../api/tripsApi';
-import Card from '../components/Card';
-import { ArrowLeftIcon } from '../components/Icons';
-import { useAuth } from '../context/useAuth';
-import { isEndDateValid } from '../utils/dateUtils';
-import './CreateTripPage.css';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { createTrip } from "../api/tripsApi";
+import Card from "../components/Card";
+import { ArrowLeftIcon } from "../components/Icons";
+import { useAuth } from "../context/useAuth";
+import { isEndDateValid } from "../utils/dateUtils";
+import "./CreateTripPage.css";
 
 export default function CreateTripPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [destination, setDestination] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [budget, setBudget] = useState('');
-  const [description, setDescription] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [destination, setDestination] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [budget, setBudget] = useState("");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const dateRangeInvalid =
@@ -25,26 +25,26 @@ export default function CreateTripPage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setError('');
+    setError("");
 
     if (!name.trim()) {
-      setError('Please enter a trip name.');
+      setError("Please enter a trip name.");
       return;
     }
     if (!destination.trim()) {
-      setError('Please enter a destination.');
+      setError("Please enter a destination.");
       return;
     }
     if (!startDate || !endDate) {
-      setError('Please choose both a start date and an end date.');
+      setError("Please choose both a start date and an end date.");
       return;
     }
     if (!isEndDateValid(startDate, endDate)) {
-      setError('End date must be on or after the start date.');
+      setError("End date must be on or after the start date.");
       return;
     }
-    if (budget !== '' && Number(budget) < 0) {
-      setError('Budget cannot be negative.');
+    if (budget !== "" && Number(budget) < 0) {
+      setError("Budget cannot be negative.");
       return;
     }
 
@@ -56,14 +56,14 @@ export default function CreateTripPage() {
           destination,
           startDate,
           endDate,
-          budget: budget === '' ? 0 : Number(budget),
+          budget: budget === "" ? 0 : Number(budget),
           description,
         },
-        user
+        user,
       );
       navigate(`/trips/${created.id}/overview`, { replace: true });
     } catch (err) {
-      setError(err.message || 'Could not create trip.');
+      setError(err.message || "Could not create trip.");
     } finally {
       setSubmitting(false);
     }
@@ -77,11 +77,12 @@ export default function CreateTripPage() {
           Back to trips
         </Link>
 
-        <div className="page-header" style={{ marginBottom: 'var(--space-5)' }}>
+        <div className="page-header" style={{ marginBottom: "var(--space-5)" }}>
           <div>
             <h1 className="page-title">Create a new trip</h1>
             <p className="page-subtitle">
-              Set the core details first. You can invite members and adjust plans anytime.
+              Set the core details first. You can invite members and adjust
+              plans anytime.
             </p>
           </div>
         </div>
@@ -175,7 +176,8 @@ export default function CreateTripPage() {
                 onChange={(e) => setBudget(e.target.value)}
               />
               <span className="form-hint">
-                Used to compare planned and tracked expenses across the group in BDT (e.g., ৳3,000–৳10,000).
+                Used to compare planned and tracked expenses across the group in
+                BDT (e.g., ৳3,000–৳10,000).
               </span>
             </div>
 
@@ -201,7 +203,7 @@ export default function CreateTripPage() {
                 className="btn btn-primary"
                 disabled={submitting || dateRangeInvalid}
               >
-                {submitting ? 'Creating trip...' : 'Create trip'}
+                {submitting ? "Creating trip..." : "Create trip"}
               </button>
             </div>
           </form>

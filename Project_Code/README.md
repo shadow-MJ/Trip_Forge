@@ -36,7 +36,10 @@ TripForge is a collaborative trip planning web application for groups of friends
 
 All API calls in `src/api/` currently return in-memory mock data with `TODO` comments marking where real REST endpoints will connect.
 
-- **Demo account:** `ranatonmoy33@gmail.com` / `tonmoy1234` (or click **Fill credentials** on the Login page, or register a new account).
+- **Demo accounts:**
+  - `bijoyhasan1612@gmail.com` / `@1111111` (Joy M · Creator of Bandarban Ridge Trail, member of Cox's Bazar and Sylhet)
+  - `ranatonmoy33@gmail.com` / `tonmoy1234` (Mahmud Rana Tonmoy)
+  - Or click **Fill credentials** on the Login page, or register a new account.
 - **Joinable demo trip invite code:** On the Dashboard, click **Join with code** and enter `6767` to join *Sundarbans River Study Tour*.
 - **Showcase trips included:**
   - *Cox's Bazar Coastline Escape* — Populated workspace (`Trip Creator` role, weather forecast active).

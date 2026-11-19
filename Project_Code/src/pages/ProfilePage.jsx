@@ -13,6 +13,7 @@ export default function ProfilePage() {
   const userId = user?.id;
 
   const [name, setName] = useState(user?.name || '');
+  const [phone, setPhone] = useState(user?.phone || '');
   const [university, setUniversity] = useState(user?.university || '');
   const [department, setDepartment] = useState(user?.department || '');
   const [bio, setBio] = useState(user?.bio || '');
@@ -61,7 +62,7 @@ export default function ProfilePage() {
 
     setSaving(true);
     try {
-      await updateProfile({ name, university, department, bio });
+      await updateProfile({ name, phone, university, department, bio });
       setSaveMessage('Profile updated.');
     } catch (err) {
       setSaveError(err.message || 'Could not update profile.');
@@ -92,6 +93,7 @@ export default function ProfilePage() {
               <div>
                 <h2 className="tf-profile__name">{user?.name}</h2>
                 <p className="tf-profile__email">{user?.email}</p>
+                {user?.phone && <p className="tf-profile__email">{user?.phone}</p>}
                 {(user?.university || user?.department) && (
                   <p className="tf-profile__affiliation">
                     {[user?.department, user?.university].filter(Boolean).join(' · ')}
@@ -170,6 +172,20 @@ export default function ProfilePage() {
                 <span className="form-hint">
                   Email changes will be supported after backend integration.
                 </span>
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="profile-phone" className="form-label">
+                  Mobile number
+                </label>
+                <input
+                  id="profile-phone"
+                  type="tel"
+                  className="form-input"
+                  placeholder="e.g., +880 1712-345678"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </div>
 
               <div className="form-field">
