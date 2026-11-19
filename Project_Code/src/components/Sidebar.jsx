@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
+import { useLanguage } from '../context/useLanguage';
 import {
   ArrowLeftIcon,
   CalendarIcon,
@@ -27,6 +28,8 @@ const TRIP_TABS = [
 ];
 
 export default function Sidebar({ trip }) {
+  const { t } = useLanguage();
+
   return (
     <aside className="tf-sidebar no-print" aria-label="Trip workspace navigation">
       <div className="tf-sidebar__top">
@@ -45,7 +48,7 @@ export default function Sidebar({ trip }) {
         <div className="tf-sidebar__top-body">
           <Link to="/dashboard" className="tf-sidebar__back">
             <ArrowLeftIcon size={14} />
-            All trips
+            {t('sidebar.allTrips', 'All trips')}
           </Link>
 
           {trip && (
@@ -64,6 +67,8 @@ export default function Sidebar({ trip }) {
             trip?.userRole === 'Trip Creator' &&
             Number(trip?.pendingRequestsCount || 0) > 0;
 
+          const translatedLabel = t(`sidebar.${key}`, label);
+
           return (
             <NavLink
               key={key}
@@ -73,14 +78,12 @@ export default function Sidebar({ trip }) {
               }
             >
               <Icon size={16} />
-              <span className="tf-sidebar__label">{label}</span>
+              <span className="tf-sidebar__label">{translatedLabel}</span>
               {showPendingBadge && (
                 <span
                   className="badge badge-warm tf-sidebar__count"
-                  title={`${trip.pendingRequestsCount} pending join request${
-                    trip.pendingRequestsCount > 1 ? 's' : ''
-                  }`}
-                  aria-label={`${trip.pendingRequestsCount} pending join requests`}
+                  title={`${trip.pendingRequestsCount} ${t('sidebar.pendingRequests', 'pending join requests')}`}
+                  aria-label={`${trip.pendingRequestsCount} ${t('sidebar.pendingRequests', 'pending join requests')}`}
                 >
                   {trip.pendingRequestsCount}
                 </span>

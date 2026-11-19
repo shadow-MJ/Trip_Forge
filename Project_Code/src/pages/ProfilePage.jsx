@@ -4,12 +4,14 @@ import Card from '../components/Card';
 import ErrorState from '../components/ErrorState';
 import Loader from '../components/Loader';
 import { useAuth } from '../context/useAuth';
+import { useLanguage } from '../context/useLanguage';
 import { formatFullDate } from '../utils/dateUtils';
 import { getInitials } from '../utils/formatters';
 import './ProfilePage.css';
 
 export default function ProfilePage() {
   const { user, updateProfile } = useAuth();
+  const { t } = useLanguage();
   const userId = user?.id;
 
   const [name, setName] = useState(user?.name || '');
@@ -79,9 +81,9 @@ export default function ProfilePage() {
       <div className="tf-profile__wrap">
         <div className="page-header">
           <div>
-            <h1 className="page-title">Profile</h1>
+            <h1 className="page-title">{t('profile.title', 'Profile')}</h1>
             <p className="page-subtitle">
-              Manage how your name and details appear to trip collaborators.
+              {t('profile.subtitle', 'Manage how your name and details appear to trip collaborators.')}
             </p>
           </div>
         </div>

@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { DestinationCover } from '../components/TropicalVisuals';
 import { useAuth } from '../context/useAuth';
+import { useLanguage } from '../context/useLanguage';
 import './AuthPages.css';
 
 export default function LoginPage() {
   const { login, isAuthenticated } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -59,9 +61,11 @@ export default function LoginPage() {
 
           <div className="tf-auth-card__body">
             <div className="tf-auth-card__header">
-              <h1 className="tf-auth-card__title">Sign in to TripForge</h1>
+              <h1 className="tf-auth-card__title">
+                {t('auth.welcomeBack', 'Welcome back')}
+              </h1>
               <p className="tf-auth-card__subtitle">
-                Open your shared trips and collaborate with your group.
+                {t('auth.signInDesc', 'Open your shared trips and collaborate with your group.')}
               </p>
             </div>
 
@@ -74,7 +78,7 @@ export default function LoginPage() {
 
               <div className="form-field">
                 <label htmlFor="login-email" className="form-label">
-                  Email address
+                  {t('auth.email', 'Email address')}
                 </label>
                 <input
                   id="login-email"
@@ -90,13 +94,13 @@ export default function LoginPage() {
 
               <div className="form-field">
                 <label htmlFor="login-password" className="form-label">
-                  Password
+                  {t('auth.password', 'Password')}
                 </label>
                 <input
                   id="login-password"
                   type="password"
                   className="form-input"
-                  placeholder="Enter your password"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
@@ -105,7 +109,7 @@ export default function LoginPage() {
               </div>
 
               <button type="submit" className="btn btn-primary" disabled={submitting}>
-                {submitting ? 'Signing in...' : 'Sign in'}
+                {submitting ? t('common.loading', 'Signing in...') : t('auth.signInBtn', 'Sign in')}
               </button>
             </form>
 

@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { getUnreadNotificationCount } from "../api/notificationsApi";
 import { useAuth } from "../context/useAuth";
+import { useLanguage } from "../context/useLanguage";
 import { getInitials } from "../utils/formatters";
-import { BellIcon, BrandIcon, CloseIcon, MenuIcon } from "./Icons";
+import { BellIcon, BrandIcon, CloseIcon, MenuIcon, TranslateIcon } from "./Icons";
 import NotificationsPanel from "./NotificationsPanel";
 import "./Navbar.css";
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
+  const { language, toggleLanguage, t } = useLanguage();
   const [unreadCount, setUnreadCount] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
   const [openMenuPath, setOpenMenuPath] = useState(null);
@@ -56,6 +58,14 @@ export default function Navbar() {
     navigate("/");
   }
 
+  const langTooltip =
+    language === "en"
+      ? "বাংলায় অনুবাদ করুন (Translate to Bangla)"
+      : "Translate to English (ইংরেজিতে অনুবাদ করুন)";
+
+  const langAriaLabel =
+    language === "en" ? "Translate to Bangla" : "Translate to English";
+
   return (
     <>
       <header className="tf-navbar no-print">
@@ -79,7 +89,7 @@ export default function Navbar() {
                     `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
-                  Trips
+                  {t("nav.trips")}
                 </NavLink>
                 <NavLink
                   to="/map"
@@ -87,7 +97,7 @@ export default function Navbar() {
                     `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
-                  Map
+                  {t("nav.map")}
                 </NavLink>
                 <NavLink
                   to="/trips/new"
@@ -95,7 +105,7 @@ export default function Navbar() {
                     `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
-                  New trip
+                  {t("nav.newTrip")}
                 </NavLink>
                 <NavLink
                   to="/profile"
@@ -103,7 +113,7 @@ export default function Navbar() {
                     `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
-                  Profile
+                  {t("nav.profile")}
                 </NavLink>
                 <NavLink
                   to="/settings"
@@ -111,7 +121,7 @@ export default function Navbar() {
                     `tf-navbar__link ${isActive ? "tf-navbar__link--active" : ""}`
                   }
                 >
-                  Settings
+                  {t("nav.settings")}
                 </NavLink>
 
                 <button
@@ -128,6 +138,20 @@ export default function Navbar() {
                   )}
                 </button>
 
+                {/* Language Switch Icon Button */}
+                <button
+                  type="button"
+                  className="btn btn-ghost tf-navbar__lang-btn"
+                  onClick={toggleLanguage}
+                  title={langTooltip}
+                  aria-label={langAriaLabel}
+                >
+                  <TranslateIcon size={18} />
+                  <span className="tf-navbar__lang-tag">
+                    {language === "en" ? "বাং" : "EN"}
+                  </span>
+                </button>
+
                 <Link
                   to="/profile"
                   className="tf-navbar__avatar"
@@ -141,7 +165,7 @@ export default function Navbar() {
                   className="btn btn-secondary btn-sm"
                   onClick={handleLogout}
                 >
-                  Sign out
+                  {t("nav.signOut")}
                 </button>
               </>
             ) : (
@@ -152,19 +176,45 @@ export default function Navbar() {
                     `btn btn-ghost btn-sm ${isActive ? "btn-secondary" : ""}`
                   }
                 >
-                  Map
+                  {t("nav.map")}
                 </NavLink>
+
+                {/* Language Switch Icon Button for guests */}
+                <button
+                  type="button"
+                  className="btn btn-ghost tf-navbar__lang-btn"
+                  onClick={toggleLanguage}
+                  title={langTooltip}
+                  aria-label={langAriaLabel}
+                >
+                  <TranslateIcon size={18} />
+                  <span className="tf-navbar__lang-tag">
+                    {language === "en" ? "বাং" : "EN"}
+                  </span>
+                </button>
+
                 <Link to="/login" className="btn btn-ghost btn-sm">
-                  Sign in
+                  {t("nav.signIn")}
                 </Link>
                 <Link to="/register" className="btn btn-primary btn-sm">
-                  Get started
+                  {t("nav.getStarted")}
                 </Link>
               </>
             )}
           </nav>
 
           <div className="tf-navbar__mobile-actions">
+            {/* Language Switch Icon in mobile toolbar */}
+            <button
+              type="button"
+              className="btn btn-ghost btn-icon tf-navbar__lang-btn-mobile"
+              onClick={toggleLanguage}
+              title={langTooltip}
+              aria-label={langAriaLabel}
+            >
+              <TranslateIcon size={18} />
+            </button>
+
             {isAuthenticated && (
               <button
                 type="button"
@@ -180,6 +230,7 @@ export default function Navbar() {
                 )}
               </button>
             )}
+
             <button
               type="button"
               className="btn btn-ghost btn-icon"
@@ -187,7 +238,7 @@ export default function Navbar() {
                 setOpenMenuPath(mobileMenuOpen ? null : location.pathname)
               }
               aria-expanded={mobileMenuOpen}
-              aria-label="Toggle navigation menu"
+              aria-label={t("nav.menu")}
             >
               {mobileMenuOpen ? (
                 <CloseIcon size={18} />
@@ -207,28 +258,28 @@ export default function Navbar() {
                   className="tf-navbar__mobile-link"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Trips
+                  {t("nav.trips")}
                 </NavLink>
                 <NavLink
                   to="/map"
                   className="tf-navbar__mobile-link"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Map
+                  {t("nav.map")}
                 </NavLink>
                 <NavLink
                   to="/trips/new"
                   className="tf-navbar__mobile-link"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  New trip
+                  {t("nav.newTrip")}
                 </NavLink>
                 <NavLink
                   to="/notifications"
                   className="tf-navbar__mobile-link"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Notifications{" "}
+                  {t("nav.notifications")}{" "}
                   {effectiveUnreadCount > 0 ? `(${effectiveUnreadCount})` : ""}
                 </NavLink>
                 <NavLink
@@ -236,21 +287,39 @@ export default function Navbar() {
                   className="tf-navbar__mobile-link"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Profile ({user?.name})
+                  {t("nav.profile")} ({user?.name})
                 </NavLink>
                 <NavLink
                   to="/settings"
                   className="tf-navbar__mobile-link"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Settings
+                  {t("nav.settings")}
                 </NavLink>
+
+                {/* Mobile Language Switcher button in menu */}
+                <button
+                  type="button"
+                  className="tf-navbar__mobile-lang"
+                  onClick={() => {
+                    toggleLanguage();
+                    setOpenMenuPath(null);
+                  }}
+                >
+                  <TranslateIcon size={18} />
+                  <span>
+                    {language === "en"
+                      ? "বাংলায় অনুবাদ করুন (Switch to Bangla)"
+                      : "Translate to English (ইংরেজিতে দেখুন)"}
+                  </span>
+                </button>
+
                 <button
                   type="button"
                   className="btn btn-secondary"
                   onClick={handleLogout}
                 >
-                  Sign out
+                  {t("nav.signOut")}
                 </button>
               </div>
             ) : (
@@ -262,21 +331,39 @@ export default function Navbar() {
                   }
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Map
+                  {t("nav.map")}
                 </NavLink>
+
+                {/* Mobile Language Switcher button in menu */}
+                <button
+                  type="button"
+                  className="tf-navbar__mobile-lang"
+                  onClick={() => {
+                    toggleLanguage();
+                    setOpenMenuPath(null);
+                  }}
+                >
+                  <TranslateIcon size={18} />
+                  <span>
+                    {language === "en"
+                      ? "বাংলায় অনুবাদ করুন (Switch to Bangla)"
+                      : "Translate to English (ইংরেজিতে দেখুন)"}
+                  </span>
+                </button>
+
                 <Link
                   to="/login"
                   className="btn btn-secondary"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Sign in
+                  {t("nav.signIn")}
                 </Link>
                 <Link
                   to="/register"
                   className="btn btn-primary"
                   onClick={() => setOpenMenuPath(null)}
                 >
-                  Get started
+                  {t("nav.getStarted")}
                 </Link>
               </div>
             )}

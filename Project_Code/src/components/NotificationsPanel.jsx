@@ -5,6 +5,7 @@ import {
   markAllNotificationsAsRead,
   markNotificationAsRead,
 } from '../api/notificationsApi';
+import { useLanguage } from '../context/useLanguage';
 import { formatTimestamp } from '../utils/dateUtils';
 import EmptyState from './EmptyState';
 import ErrorState from './ErrorState';
@@ -13,6 +14,7 @@ import Loader from './Loader';
 import './NotificationsPanel.css';
 
 export default function NotificationsPanel({ onClose, onUnreadCountChange }) {
+  const { t } = useLanguage();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -97,9 +99,13 @@ export default function NotificationsPanel({ onClose, onUnreadCountChange }) {
       <aside className="tf-notif-panel" role="dialog" aria-modal="true" aria-label="Notifications">
         <div className="tf-notif-panel__header">
           <div>
-            <h2 className="tf-notif-panel__title">Notifications</h2>
+            <h2 className="tf-notif-panel__title">
+              {t('notifications.panelTitle', 'Notifications')}
+            </h2>
             <p className="tf-notif-panel__subtitle">
-              {unreadCount > 0 ? `${unreadCount} unread` : 'All caught up'}
+              {unreadCount > 0
+                ? `${unreadCount} ${t('notifications.unread', 'unread')}`
+                : t('notifications.empty', 'All caught up')}
             </p>
           </div>
           <div className="inline-actions">
@@ -110,14 +116,14 @@ export default function NotificationsPanel({ onClose, onUnreadCountChange }) {
                 onClick={handleMarkAllRead}
               >
                 <CheckIcon size={14} />
-                Mark all read
+                {t('notifications.markAllRead', 'Mark all read')}
               </button>
             )}
             <button
               type="button"
               className="btn btn-ghost btn-icon"
               onClick={onClose}
-              aria-label="Close notifications"
+              aria-label={t('common.close', 'Close')}
             >
               <CloseIcon size={18} />
             </button>
@@ -184,7 +190,7 @@ export default function NotificationsPanel({ onClose, onUnreadCountChange }) {
 
         <div className="tf-notif-panel__footer">
           <Link to="/notifications" className="btn btn-secondary btn-sm" onClick={onClose}>
-            View full notifications page
+            {t('notifications.viewAll', 'View full notifications page')}
           </Link>
         </div>
       </aside>

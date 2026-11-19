@@ -9,10 +9,12 @@ import EmptyState from '../components/EmptyState';
 import ErrorState from '../components/ErrorState';
 import { BellIcon, CheckIcon, RefreshIcon } from '../components/Icons';
 import Loader from '../components/Loader';
+import { useLanguage } from '../context/useLanguage';
 import { formatTimestamp } from '../utils/dateUtils';
 import './NotificationsPage.css';
 
 export default function NotificationsPage() {
+  const { t } = useLanguage();
   const [items, setItems] = useState([]);
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
@@ -77,10 +79,11 @@ export default function NotificationsPage() {
       <div className="tf-notifs-page__wrap">
         <div className="page-header">
           <div>
-            <h1 className="page-title">Notifications</h1>
+            <h1 className="page-title">{t('notifications.panelTitle', 'Notifications')}</h1>
             <p className="page-subtitle">
-              In-app activity updates across your trips.{' '}
-              {unreadCount > 0 ? `${unreadCount} unread.` : 'All caught up.'}
+              {unreadCount > 0
+                ? `${unreadCount} ${t('notifications.unread', 'unread')}.`
+                : t('notifications.empty', 'All caught up.')}
             </p>
           </div>
           <div className="inline-actions">
@@ -90,7 +93,7 @@ export default function NotificationsPage() {
               onClick={handleRefresh}
             >
               <RefreshIcon size={14} />
-              Refresh
+              {t('common.refresh', 'Refresh')}
             </button>
             {unreadCount > 0 && (
               <button
@@ -99,7 +102,7 @@ export default function NotificationsPage() {
                 onClick={handleMarkAllRead}
               >
                 <CheckIcon size={14} />
-                Mark all read
+                {t('notifications.markAllRead', 'Mark all read')}
               </button>
             )}
           </div>

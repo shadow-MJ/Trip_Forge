@@ -12,31 +12,8 @@ import {
   MemberAvatarStack,
 } from "../components/TropicalVisuals";
 import { useAuth } from "../context/useAuth";
+import { useLanguage } from "../context/useLanguage";
 import "./LandingPage.css";
-
-const PILLARS = [
-  {
-    tone: "walnut",
-    Icon: CalendarIcon,
-    title: "Shared itinerary & quick polls",
-    description:
-      "Structure multi-day trails together, vote on campsites and routes, and settle group decisions in minutes.",
-  },
-  {
-    tone: "cognac",
-    Icon: WalletIcon,
-    title: "BDT expense splitting",
-    description:
-      "Track group expenditures in BDT (৳3k–15k group budgets) with exact who-pays-whom balance settlements.",
-  },
-  {
-    tone: "bronze",
-    Icon: ListCheckIcon,
-    title: "Packing & trip summary",
-    description:
-      "Distribute gear across friends, check off essentials, and export a clean, unified travel dossier.",
-  },
-];
 
 const PREVIEW_MEMBERS = [
   { id: "p1", name: "Joy M" },
@@ -47,6 +24,37 @@ const PREVIEW_MEMBERS = [
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuth();
+  const { t } = useLanguage();
+
+  const pillars = [
+    {
+      tone: "walnut",
+      Icon: CalendarIcon,
+      title: t("landing.pillar1Title", "Shared itinerary & quick polls"),
+      description: t(
+        "landing.pillar1Desc",
+        "Structure multi-day trails together, vote on campsites and routes, and settle group decisions in minutes.",
+      ),
+    },
+    {
+      tone: "cognac",
+      Icon: WalletIcon,
+      title: t("landing.pillar2Title", "BDT expense splitting"),
+      description: t(
+        "landing.pillar2Desc",
+        "Track group expenditures in BDT (৳3k–15k group budgets) with exact who-pays-whom balance settlements.",
+      ),
+    },
+    {
+      tone: "bronze",
+      Icon: ListCheckIcon,
+      title: t("landing.pillar3Title", "Packing & trip summary"),
+      description: t(
+        "landing.pillar3Desc",
+        "Distribute gear across friends, check off essentials, and export a clean, unified travel dossier.",
+      ),
+    },
+  ];
 
   return (
     <main className="tf-landing">
@@ -55,34 +63,38 @@ export default function LandingPage() {
           <div className="tf-landing__copy">
             <span className="badge badge-warm tf-landing__pill">
               <SunIcon size={12} />
-              EXPEDITION ATELIER · 2026
+              {t("landing.pill", "EXPEDITION ATELIER · 2026")}
             </span>
 
             <h1 className="tf-landing__title">
-              Plan unforgettable escapes{" "}
-              <em className="serif-accent tf-hero-serif">together</em>.
+              {t("landing.title", "Plan unforgettable escapes")}{" "}
+              <em className="serif-accent tf-hero-serif">
+                {t("landing.titleAccent", "together")}
+              </em>
+              .
             </h1>
 
             <p className="tf-landing__subtitle">
-              Replace chaotic group chats with one serene, tactile workspace for
-              shared itineraries, quick polls, BDT expense settlements, and
-              collective gear packing.
+              {t(
+                "landing.subtitle",
+                "Replace chaotic group chats with one serene, tactile workspace for shared itineraries, quick polls, BDT expense settlements, and collective gear packing.",
+              )}
             </p>
 
             <div className="tf-landing__cta">
               {isAuthenticated ? (
                 <Link to="/dashboard" className="btn btn-primary">
-                  Open your trips
+                  {t("landing.openTrips", "Open your trips")}
                   <ArrowRightIcon size={16} />
                 </Link>
               ) : (
                 <>
                   <Link to="/register" className="btn btn-primary">
-                    Start planning free
+                    {t("landing.startFree", "Start planning free")}
                     <ArrowRightIcon size={16} />
                   </Link>
                   <Link to="/login" className="btn btn-secondary">
-                    Sign in
+                    {t("landing.signIn", "Sign in")}
                   </Link>
                 </>
               )}
@@ -151,7 +163,7 @@ export default function LandingPage() {
 
       <section className="container tf-landing__pillars-wrap">
         <div className="tf-landing__pillars">
-          {PILLARS.map((pillar) => {
+          {pillars.map((pillar) => {
             const Icon = pillar.Icon;
             return (
               <div key={pillar.title} className="tf-landing__pillar">

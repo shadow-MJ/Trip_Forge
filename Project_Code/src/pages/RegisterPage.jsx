@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { DestinationCover } from '../components/TropicalVisuals';
 import { useAuth } from '../context/useAuth';
+import { useLanguage } from '../context/useLanguage';
 import './AuthPages.css';
 
 export default function RegisterPage() {
   const { register, isAuthenticated } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -65,9 +67,11 @@ export default function RegisterPage() {
 
           <div className="tf-auth-card__body">
             <div className="tf-auth-card__header">
-              <h1 className="tf-auth-card__title">Create your TripForge account</h1>
+              <h1 className="tf-auth-card__title">
+                {t('auth.registerTitle', 'Begin your expedition')}
+              </h1>
               <p className="tf-auth-card__subtitle">
-                Start planning group trips with friends or classmates.
+                {t('auth.registerDesc', 'Create an account to start planning trips, splitting expenses, and discovering Bangladesh.')}
               </p>
             </div>
 
@@ -175,14 +179,16 @@ export default function RegisterPage() {
               </div>
 
               <button type="submit" className="btn btn-primary" disabled={submitting}>
-                {submitting ? 'Creating account...' : 'Create account'}
+                {submitting
+                  ? t('common.loading', 'Creating account...')
+                  : t('auth.createAccountBtn', 'Create account')}
               </button>
             </form>
 
             <p className="tf-auth-switch">
-              Already have an account?{' '}
+              {t('auth.haveAccount', 'Already have an account?')}{' '}
               <Link to="/login" className="tf-auth-link">
-                Sign in
+                {t('nav.signIn', 'Sign in')}
               </Link>
             </p>
           </div>

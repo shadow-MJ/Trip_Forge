@@ -4,11 +4,13 @@ import { createTrip } from "../api/tripsApi";
 import Card from "../components/Card";
 import { ArrowLeftIcon } from "../components/Icons";
 import { useAuth } from "../context/useAuth";
+import { useLanguage } from "../context/useLanguage";
 import { isEndDateValid } from "../utils/dateUtils";
 import "./CreateTripPage.css";
 
 export default function CreateTripPage() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -79,10 +81,12 @@ export default function CreateTripPage() {
 
         <div className="page-header" style={{ marginBottom: "var(--space-5)" }}>
           <div>
-            <h1 className="page-title">Create a new trip</h1>
+            <h1 className="page-title">{t("createTrip.title", "Create a new trip")}</h1>
             <p className="page-subtitle">
-              Set the core details first. You can invite members and adjust
-              plans anytime.
+              {t(
+                "createTrip.subtitle",
+                "Set the core details first. You can invite members and adjust plans anytime.",
+              )}
             </p>
           </div>
         </div>
@@ -196,14 +200,16 @@ export default function CreateTripPage() {
 
             <div className="tf-create-trip__actions">
               <Link to="/dashboard" className="btn btn-secondary">
-                Cancel
+                {t("common.cancel", "Cancel")}
               </Link>
               <button
                 type="submit"
                 className="btn btn-primary"
                 disabled={submitting || dateRangeInvalid}
               >
-                {submitting ? "Creating trip..." : "Create trip"}
+                {submitting
+                  ? t("common.loading", "Creating trip...")
+                  : t("createTrip.submit", "Create trip")}
               </button>
             </div>
           </form>
