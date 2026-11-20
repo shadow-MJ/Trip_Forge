@@ -14,6 +14,7 @@ import {
 } from '../components/Icons';
 import Modal from '../components/Modal';
 import { useAuth } from '../context/useAuth';
+import { useLanguage } from '../context/useLanguage';
 import {
   BANGLADESH_DISTRICTS,
   BANGLADESH_DIVISIONS,
@@ -24,6 +25,7 @@ import './BangladeshMapPage.css';
 
 export default function BangladeshMapPage() {
   const { user } = useAuth();
+  const { t, isBangla } = useLanguage();
   const firstName = user?.name?.split(' ')[0] || 'traveler';
 
   const [activeDivision, setActiveDivision] = useState('All');
@@ -111,7 +113,7 @@ export default function BangladeshMapPage() {
                 }`}
                 onClick={() => setActiveDivision(div)}
               >
-                <span>{div}</span>
+                <span>{t(div, div)}</span>
                 <span className="tf-map-division-pill__count">{count}</span>
               </button>
             );
@@ -125,7 +127,7 @@ export default function BangladeshMapPage() {
           <input
             type="search"
             className="form-input tf-map-search__input"
-            placeholder="Search district or spot (e.g. Sajek, Inani, Ratargul)..."
+            placeholder={t('map.searchPlaceholder', 'Search district or spot (e.g. Sajek, Inani, Ratargul)...')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             aria-label="Search districts and places"
@@ -198,10 +200,14 @@ export default function BangladeshMapPage() {
                   >
                     <div className="tf-map-district-card__top">
                       <div className="tf-map-district-card__names">
-                        <span className="tf-map-district-card__en">{district.name}</span>
-                        <span className="tf-map-district-card__bn">{district.bnName}</span>
+                        <span className="tf-map-district-card__en">
+                          {isBangla ? district.bnName : district.name}
+                        </span>
+                        <span className="tf-map-district-card__bn">
+                          {isBangla ? district.name : district.bnName}
+                        </span>
                       </div>
-                      <span className="badge">{district.division}</span>
+                      <span className="badge">{t(district.division, district.division)}</span>
                     </div>
 
                     <p className="tf-map-district-card__summary">

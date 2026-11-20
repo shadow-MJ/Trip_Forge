@@ -24,12 +24,14 @@ import Loader from '../components/Loader';
 import Modal from '../components/Modal';
 import { DestinationCover, MemberAvatarStack } from '../components/TropicalVisuals';
 import { useAuth } from '../context/useAuth';
+import { useLanguage } from '../context/useLanguage';
 import { formatDateRange, formatFullDate } from '../utils/dateUtils';
 import { formatCurrency, pluralize } from '../utils/formatters';
 import './DashboardPage.css';
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const userId = user?.id;
   const navigate = useNavigate();
 
@@ -154,18 +156,20 @@ export default function DashboardPage() {
         <div>
           <span className="badge badge-warm tf-dash-hero__badge">
             <SunIcon size={12} />
-            EXPEDITIONS // {pluralize(trips.length, 'ACTIVE DOSSIER')}
+            {t('dashboard.badge', 'EXPEDITIONS')} // {pluralize(trips.length, 'ACTIVE DOSSIER')}
           </span>
-          <h1 className="page-title">Ready for your next expedition, <em className="serif-accent">{firstName}</em>?</h1>
+          <h1 className="page-title">
+            {t('dashboard.greeting', 'Ready for your next expedition')}, <em className="serif-accent">{firstName}</em>?
+          </h1>
           <p className="page-subtitle">
-            Keep itineraries, group polls, and BDT expenses moving smoothly together.
+            {t('dashboard.subtitle', 'Keep itineraries, group polls, and BDT expenses moving smoothly together.')}
           </p>
         </div>
 
         <div className="inline-actions tf-dash-hero__actions">
           <Link to="/notifications" className="btn btn-secondary">
             <BellIcon size={15} />
-            Notifications
+            {t('dashboard.notifications', 'Notifications')}
             {unreadCount > 0 && <span className="badge badge-warm">{unreadCount}</span>}
           </Link>
           <button
@@ -173,11 +177,11 @@ export default function DashboardPage() {
             className="btn btn-secondary"
             onClick={handleOpenJoinModal}
           >
-            Join with code
+            {t('dashboard.joinCode', 'Join with code')}
           </button>
           <Link to="/trips/new" className="btn btn-primary">
             <PlusIcon size={16} />
-            Create trip
+            {t('dashboard.createTrip', 'Create trip')}
           </Link>
         </div>
       </section>
@@ -191,10 +195,10 @@ export default function DashboardPage() {
                 AWAITING APPROVAL // {pluralize(pendingRequests.length, 'DOSSIER')}
               </span>
               <h2 id="pending-requests-title" className="tf-pending-section__title">
-                Pending join requests
+                {t('dashboard.pendingTitle', 'Pending join requests')}
               </h2>
               <p className="tf-pending-section__subtitle">
-                The trip creator must approve your request before you can access the workspace.
+                {t('dashboard.pendingSubtitle', 'The trip creator must approve your request before you can access the workspace.')}
               </p>
             </div>
           </div>
