@@ -1,0 +1,94 @@
+{
+  "info": { "name": "TripForge API", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "tripId", "value": "trip-1" },
+    { "key": "activityId", "value": "act-101" },
+    { "key": "ideaId", "value": "idea-1" },
+    { "key": "pollId", "value": "poll-1" },
+    { "key": "optionId", "value": "opt-1" },
+    { "key": "expenseId", "value": "exp-1" },
+    { "key": "itemId", "value": "pack-1" },
+    { "key": "postId", "value": "post-1" },
+    { "key": "memberId", "value": "user-2" },
+    { "key": "requestId", "value": "req-3-1" }
+  ],
+  "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+  "item": [
+    { "name": "Auth", "item": [
+      { "name": "Login - stores token", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url":"{{baseUrl}}/auth/login", "body":{"mode":"raw","raw":"{\"email\":\"demo-tonmoy@tripforge.test\",\"password\":\"tonmoy1234\"}"} }, "event":[{"listen":"test","script":{"exec":["const json=pm.response.json(); if(json.data?.token) pm.collectionVariables.set('token',json.data.token);"],"type":"text/javascript"}}]},
+      { "name":"Register","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/auth/register","body":{"mode":"raw","raw":"{\"name\":\"Test User\",\"email\":\"test@tripforge.test\",\"password\":\"secret12\",\"phone\":\"\",\"university\":\"\",\"department\":\"\"}"}}},
+      { "name":"Current user","request":{"method":"GET","url":"{{baseUrl}}/auth/me"}},
+      { "name":"Update profile","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/auth/profile","body":{"mode":"raw","raw":"{\"name\":\"Mahmud Rana Tonmoy\",\"phone\":\"\",\"bio\":\"Updated bio\",\"university\":\"Daffodil International University\",\"department\":\"Software Engineering\"}"}}}
+    ]},
+    { "name":"Trips", "item":[
+      {"name":"List trips","request":{"method":"GET","url":"{{baseUrl}}/trips"}},
+      {"name":"Create trip","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips","body":{"mode":"raw","raw":"{\"name\":\"New Trip\",\"destination\":\"Sylhet\",\"startDate\":\"2027-04-01\",\"endDate\":\"2027-04-03\",\"budget\":5000,\"description\":\"Test trip\"}"}}},
+      {"name":"Get trip","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}"}},
+      {"name":"Update trip","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}","body":{"mode":"raw","raw":"{\"name\":\"Updated Trip\",\"budget\":6000}"}}},
+      {"name":"Delete trip","request":{"method":"DELETE","url":"{{baseUrl}}/trips/{{tripId}}"}},
+      {"name":"Join by invite code","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/join-request","body":{"mode":"raw","raw":"{\"inviteCode\":\"6767\"}"}}},
+      {"name":"My join requests","request":{"method":"GET","url":"{{baseUrl}}/users/me/join-requests"}},
+      {"name":"Cancel join request","request":{"method":"DELETE","url":"{{baseUrl}}/users/me/join-requests/{{requestId}}"}},
+      {"name":"Recent updates","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/updates"}},
+      {"name":"Trip summary","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/summary"}}
+    ]},
+    { "name":"Members", "item":[
+      {"name":"List members","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/members"}},
+      {"name":"Pending join requests","request":{"method":"GET","url":"{{baseUrl}}/trips/trip-3/join-requests"}},
+      {"name":"Approve join request","request":{"method":"POST","url":"{{baseUrl}}/trips/trip-3/join-requests/{{requestId}}/approve"}},
+      {"name":"Reject join request","request":{"method":"POST","url":"{{baseUrl}}/trips/trip-3/join-requests/{{requestId}}/reject"}},
+      {"name":"Regenerate invite code","request":{"method":"POST","url":"{{baseUrl}}/trips/{{tripId}}/invite-code"}},
+      {"name":"Remove member","request":{"method":"DELETE","url":"{{baseUrl}}/trips/{{tripId}}/members/{{memberId}}"}},
+      {"name":"Leave trip","request":{"method":"POST","url":"{{baseUrl}}/trips/{{tripId}}/leave"}}
+    ]},
+    { "name":"Itinerary", "item":[
+      {"name":"List itinerary","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/itinerary"}},
+      {"name":"Add activity","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/itinerary","body":{"mode":"raw","raw":"{\"day\":1,\"title\":\"Breakfast\",\"time\":\"08:00\",\"location\":\"Hotel\",\"cost\":350,\"notes\":\"Group breakfast\"}"}}},
+      {"name":"Update activity","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/itinerary/{{activityId}}","body":{"mode":"raw","raw":"{\"title\":\"Updated activity\",\"cost\":400}"}}},
+      {"name":"Reorder activity","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/itinerary/reorder","body":{"mode":"raw","raw":"{\"day\":1,\"activityId\":\"{{activityId}}\",\"direction\":\"down\"}"}}},
+      {"name":"Delete activity","request":{"method":"DELETE","url":"{{baseUrl}}/trips/{{tripId}}/itinerary/{{activityId}}"}}
+    ]},
+    { "name":"Ideas", "item":[
+      {"name":"List ideas","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/ideas"}},
+      {"name":"Create idea","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/ideas","body":{"mode":"raw","raw":"{\"title\":\"Beach bike ride\",\"location\":\"Beach road\",\"estimatedCost\":500,\"notes\":\"Bring helmets\"}"}}},
+      {"name":"Vote idea","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/ideas/{{ideaId}}/vote","body":{"mode":"raw","raw":"{\"value\":1}"}}},
+      {"name":"Mark added to itinerary","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/ideas/{{ideaId}}","body":{"mode":"raw","raw":"{\"addedToItinerary\":true}"}}},
+      {"name":"Set idea status","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/ideas/{{ideaId}}/status","body":{"mode":"raw","raw":"{\"status\":\"accepted\"}"}}}
+    ]},
+    { "name":"Polls", "item":[
+      {"name":"List polls","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/polls"}},
+      {"name":"Create poll","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/polls","body":{"mode":"raw","raw":"{\"question\":\"Train or bus?\",\"options\":[\"Train\",\"Bus\"]}"}}},
+      {"name":"Vote poll","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/polls/{{pollId}}/vote","body":{"mode":"raw","raw":"{\"optionId\":\"{{optionId}}\"}"}}},
+      {"name":"Close poll","request":{"method":"PATCH","url":"{{baseUrl}}/trips/{{tripId}}/polls/{{pollId}}/close"}}
+    ]},
+    { "name":"Expenses", "item":[
+      {"name":"List expenses","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/expenses"}},
+      {"name":"Add expense","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/expenses","body":{"mode":"raw","raw":"{\"title\":\"Dinner\",\"amount\":1200,\"payerId\":\"user-1\",\"participantIds\":[\"user-1\",\"user-2\",\"user-3\",\"user-4\"],\"date\":\"2026-12-20\"}"}}},
+      {"name":"Update expense","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/expenses/{{expenseId}}","body":{"mode":"raw","raw":"{\"amount\":1300}"}}},
+      {"name":"Delete expense","request":{"method":"DELETE","url":"{{baseUrl}}/trips/{{tripId}}/expenses/{{expenseId}}"}}
+    ]},
+    { "name":"Packing", "item":[
+      {"name":"List packing","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/packing"}},
+      {"name":"Add packing item","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/packing","body":{"mode":"raw","raw":"{\"title\":\"First aid kit\",\"assigneeId\":\"user-3\"}"}}},
+      {"name":"Toggle packing item","request":{"method":"PATCH","url":"{{baseUrl}}/trips/{{tripId}}/packing/{{itemId}}/toggle"}},
+      {"name":"Assign packing item","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/packing/{{itemId}}","body":{"mode":"raw","raw":"{\"assigneeId\":\"user-2\"}"}}},
+      {"name":"Delete packing item","request":{"method":"DELETE","url":"{{baseUrl}}/trips/{{tripId}}/packing/{{itemId}}"}}
+    ]},
+    { "name":"Discussion", "item":[
+      {"name":"List posts","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/discussion"}},
+      {"name":"Create post","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/discussion","body":{"mode":"raw","raw":"{\"content\":\"Please confirm the departure time.\"}"}}},
+      {"name":"Reply","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/trips/{{tripId}}/discussion/{{postId}}/replies","body":{"mode":"raw","raw":"{\"content\":\"Confirmed.\"}"}}}
+    ]},
+    { "name":"Notifications", "item":[
+      {"name":"List notifications","request":{"method":"GET","url":"{{baseUrl}}/notifications"}},
+      {"name":"Unread count","request":{"method":"GET","url":"{{baseUrl}}/notifications/unread-count"}},
+      {"name":"Mark one read","request":{"method":"PATCH","url":"{{baseUrl}}/notifications/notif-1/read"}},
+      {"name":"Mark all read","request":{"method":"PATCH","url":"{{baseUrl}}/notifications/read-all"}}
+    ]},
+    { "name":"Weather", "item":[
+      {"name":"Get weather","request":{"method":"GET","url":"{{baseUrl}}/trips/{{tripId}}/weather"}}
+    ]}
+  ]
+}
